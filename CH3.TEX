@@ -1,0 +1,584 @@
+\chapter{KNMI2B2 Main Code General Requirements:}
+
+KNMI2B2 was written and designed to operate on any PC Compatible
+platform. All graphical examples have been generated though
+the software package Origin by MicroCal Software Inc. in a Windows 3.0
+environment. The source code is written in MS-FORTRAN 5.1 and is 
+approximately 1900 lines in length. Currently there are 32 adjustable
+parameters which will be described In this chapter.
+
+\subsection{KNMI2B2 Main Code Operating Description:}
+
+In our description and instructions we will be using the sample data 
+set 93216riv.dat provided to us by RIVM. This file is formatted with 
+each return profile or trace as a 100 data point row 
+6 integer digit wide ASCII data seperated by single spaces between points.
+KNMI2B2 reads this data in as real numbers with a width of 7 digits and no
+decimals. In the past, the data has been range corrected, although
+the user can specify uncorrected data also, provided the data is
+similarly formatted. As each trace is read a saturation flag in a
+time index file is also read. The flag indicates if a signal contains 
+saturated data.
+
+The parameter file known as para.dat which gives the program it's
+operating instructions for performing calculations, the lidar
+data and knmi2b.lis which assigns filenames to the many program 
+data products are read first. Data such as lidar radiosonde filenames
+are also read here. The lidar data is read in the format
+described above. Range correction if required, 
+is removed and an array is created with the logarithmic 
+values of the signal for use in the cloud base
+algortihm. At this point the user can have specified in the para.dat
+file to multiply or sum to all the data by a constant, set all data
+below a certain set value to that set value and/or smooth the data
+by averaging or fitting a line from the topmost range height 
+down to any specified height.
+
+Data and parameters are then passed to a subroutine
+called club which locates the cloud base, peak return signal and
+apparent top or penetration height index from the array containing
+either the logarithmic or linear values of the lidar backscatter
+(depending on the users discretion). For $1064 nm$ a logarithmic 
+signal is preferred. This is a modified
+version of the ISTS cloud base height algorithm known as icb.for.
+It is currently limited to locating up to 3 cloud layers \cite{srpwsaic}.
+
+If the data is not saturated then the radiosonde 
+data is read in next. From it, a Rayleigh pure molecular
+atmosphere is calculated and a value for the boundary condition or
+reference extinction coefficient is interpolated beween the two 
+points bounding the inversion reference height in the sonde data.
+The reference height can be specified either as some fixed height
+above all clouds in the time series or at a fixed set height in para.dat. 
+The user can choose from the far-end or Klett, a 
+modified Klett for $k=1$ described in the previous
+chapter by the Eq.~{\ref{wolfee}}, or slope method inversion 
+algorithm to invert the data and 
+obtain an optical extinction profile \cite{jdk1}.
+
+A subroutine then calculates the optical depth and mean
+extinction from this profile. These two data are also calculated
+by comparing the signal just above and below the cloud, using the
+{\em ratio method}. Finally the meteorological parameters read in from the
+sonde data are correlated with the clouds optical and geometric
+properties and all of these results written to the previously specified 
+files listed in knmk2b.lis.
+
+If however the saturation flag is positive and the operator chooses to, 
+the previous steps following the cloud base height algorithm can be omitted.
+All files are then closed and the program terminates.
+
+\begin{figure}
+\vspace{8.0in}
+\caption{Flow chart of the KNMI2B2 software features and 
+data processing scheme, part 1.} 
+\end{figure}
+
+\begin{figure}
+\vspace{8.0in}
+\caption{Flow chart of the KNMI2B2 software features and 
+data processing scheme, part 2.} 
+\end{figure}
+
+\begin{figure}
+\vspace{8.0in}
+\caption{Flow chart of the KNMI2B2 software features and 
+data processing scheme, part 3.} 
+\end{figure}
+
+This is a completely self-contained program. There are no outside
+objects to link as all the subroutines are attached to the main source
+code listing, should modifications and a recompilation of the program be
+required. Below is a flow chart (based on ANSI X3.5-1970) 
+of the program schematic, it will be useful
+to refer to this when using this package (see Figures~{3.1-3.3}).
+
+\section{KNMI2B2 Operating Requirements: Support Files,Inputs and Formats}
+
+KNMI2B2 relys on four input files for it's operation: para.dat, knmi2b.lis
+(the lidar and radiosonde data file list) and of course the lidar and 
+radiosonde data themselves; para.dat has the following format:
+
+
+\noindent
+{\tt
+npts,mpt,dpt,tpt,inpts,rrcor,lambda\\
+100,3,3,5,20,1,1.064\\
+rez,zero,nob,high,nlog,mixbit\\
+40.00,-1.0e+20,1,1.0e+20,1,0\\
+corrfak,xovlp,ieb,k,seth,asw,conh,avlen\\
+0.0,800.0,401,1.0,0,1,1500.0,20\\
+nd,gain,nos,multi,offset,fav\\
+0.0,0.0,250,1.,1.0e-30,0\\
+thrush,ntot,iabove,iwk,isat,baseline,add,plusig\\
+100.,14,2,0,1,1,1,10.0\\
+}
+
+\noindent
+Within the file each parameter required in the execution of the program
+is listed below the abbreviation used as the variable in the program 
+itself and represent the following:
+
+\begin{itemize}
+\item npts: number of points in the lidar data per profile. The current 
+version allows the user to select either 100 or 200 points [integer].
+\item mpt: number of points in the cloud base algorithm which are searched
+for to locate the subsequent peak signal corresponding a given cloudbase
+height in the cloud base height algorithm [integer].
+\item dpt: number of points fit used in determining the derivative in the
+cloud base height algorithm [integer].
+\item tpt: number of range interval points averaged 
+above and below the cloud in obtaining an optical 
+depth and a mean optical extinction value
+using the ratio method. The algorithm will average the number of
+points available. Hence if the number of points above the cloud
+in question is less than {\em tpt}, then  it will use the number of
+points avaiable [integer].
+\item inpts: number of points that the signal will be averaged above
+the cloud in order to obtain an adequate signal-to-noise ratio
+in the reference height data The algorithm will average the number of
+points available. Hence if the number of points above the cloud
+in question is less than {\em tpt}, then  it will use the number of
+points avaiable [integer].
+\item rrcor: selects between removing range correction from lidar data
+(1) before processing or to not remove it (0) [integer].
+\item lambda: this is the wavelength used in the lidar system given
+in $\mu m$. This data is used to calculate the Rayleigh 
+backscatter cross-section in the reference extinction coefficient
+calculation \cite{mn}.
+\item rez: vertical resolution of the lidar system [real].
+\item zero: lowest possible value from the lidar data [real].
+\item nob: number of individual profiles to average over in order to
+obtain a sufficent SNR (no longer fully implemented, set to 1) [integer].
+\item high: highest possible value the optical extinction can have. Used in
+the inversion to account for cases where a zero occurs in
+the denominator (must be $>>1$, ussually set to about $10^{+20}$) [real].
+\item nlog:selects between using the logarithm of the backscatter signal
+(1) or the linear value (0) in the cloud base algorithm. For I.R. data
+set to 1 [integer].
+\item mixbit: selects between correlating meteorological measurements
+with cloud base(1), mid(0) or top (2) height [integer].
+\item corrfak: factor which sets the rejection criteria in the cloud
+base algorithm. This factor that determines the sensitivity of 
+the algorithm. Normally low corrfak values tend to trigger on
+noise spikes, whereas high corrfak will not recognize weak cloud layers. 
+It is described in the previous chapter in greater detail. 
+for our data we have obtained satisfactory results with corrfak set 
+to 0. [real].
+\item xovlp: overlap altitude height [height rejection criteria, for
+region of initial transmitter-receiver field-of-view (FOV)
+intersection.] (ussually set between 500-800) [real].
+\item ieb: total number of complete profiles or traces to be read from the
+lidar data file [integer].
+\item k: backscatter to extinction ratio exponent, ussually set to 1.
+\item seth: used in conjunction with the variable {\em conh}. When set to 1,
+it instructs the program to begin inverting the data from {\em conh}
+downwards [integer].
+\item asw: When set to 1, this parameter instructs the program to 
+average from the top most range interval down to and stopping at 
+the height specified by {\em conh} described below. The averaging
+is from point to point signals values adjacent in range 
+over the number of intervals on either side of a given point
+specified by {\em avlen} described below. If {\em fav} (described
+below is set to 1, then a least squares fit is performed of
+{em avlen} points (up to 5 points only advised) instead of averaging.
+If set to (0) no averaging or fitting is performed [integer].
+\item avlen: specifies the number of intervals on either side of a given
+point that are averaged or fitted (see also {\em asw, avlen, fav}) [integer].
+\item conh: the confidence height is the highest possible altitude at which the
+user is confident of the signal to noise ratio. This setting 
+specifies the height at which the program stops averaging
+(starting at the topmost range height downwards) to terminate 
+averaging signals adjacent in range or the range at which to begin
+inverting when used with the parameters {\em asw, seth} or {\em fav}, 
+as previously described [integer].
+\item nd: neutral density (optical) filtering applied during collection
+    of data [part of cloud base algorithm rejection criteria].
+\item gain: currently not in use (set to 0).
+\item nos: number of shots collected and hardware averaged per profile
+(set to 250).
+\item multi: can be set to any number that the user wishes to
+mutiply the entire profile by. This is useful 
+extremely small values of signal where computational
+limits may interfere with optical inversions or cloud
+basing height location algorithms. Since all factors are divided out
+in the inversions, this value has no effect on our
+optical derived qunatities [real].
+\item offset:any constant that the user wishes to add to the entire 
+profile [real].
+\item fav: selects between least-sqaures fit (1) and simple averaging (0)
+of the signal from the topmost range height down to the 
+height specified by the parameter {\em conh}. 
+Must be used with {\em asw} (see above) set to 1 [integer].
+\item thrush: currently not in use (set to 0).
+\item ntot: total number of points in the sonde data [integer].
+\item iabove: number of points above the cloud top to set the 
+reference height for the Klett Inversion as [integer].
+\item iwk: selects between a standard implementation of the far end ({\em Klett}) 
+(set to 0) a modified algorithm for $k=1$ described in the previous
+chapter by the Eq.~{\ref{wolfee}} and suggested by W. Steinbrecht (set to 1)
+and the {\em slope method} (set to 2) inversions for obtaining the
+optical extinction profiles [integer].
+\item isat: selects whether or not to invert (0) or to disregard and not
+invert saturated data [integer].
+\item baseline: selects whether or not to invert using an average of 
+the actual signal determined by inpts (0) or to 
+use the value specified by the parameter {\em zero}  as the value
+for the reference signal (1). This is useful only if the signal value
+at the reference height is known [integer].
+\item add: selects between background addition of the lowest value (negative)
+signal plus and offset specified above when on (1) or to not add
+any constant to the signal (0) [integer].
+\item plusig:user specified amount that can be added to the calculated Rayleigh
+extinction value [real].
+\end{itemize}
+
+\section{KNMI2B2 Input/Output File Formats:}
+  
+KNMI2B2 outputs five data files the names of which are specified in the 
+third to seventh lines of the file list known as knmi2b.lis. The first
+two lines are input file names; knmi2b.lis has the following format:
+
+
+\noindent
+{\tt
+93216riv.dat\\  
+9321600.dat\\
+93216clb.dat\\  
+93216opt.dat\\
+93216op2.dat\\
+93216mix.dat\\
+93216and.dat\\
+93216tru.dat\\
+93216nrc.dat\\
+93216riv.t\\
+}
+
+
+\noindent
+The first line specifies the lidar backscatter file to be read,
+in the format: rows of 100 data points, 6 integer digit wide ASCII data seperated 
+by single spaces between points.
+\noindent
+The second line indicates the name of the sonde file for that day,
+in the format:
+
+\begin{center}
+ 	{\tt 1x,pr,1x,ht,1x,tp,2x,rh,2x,dp,2x,wd,3x,wv}
+\end{center}
+\noindent
+where,\\
+\noindent
+nx: n character space(s)\\
+pr: pressure in millibars in real 6 digit wide, 1 decimal place format.\\
+ht: height in metres in integer 5 digit wide format.\\
+tp: temperature in degrees Celsius in real 5 digit wide, 1 decimal place format.\\
+rh: relative humidity in percent in integer 2 digit wide format.\\
+dp: dew-point temperature in real 5 digit wide, 1 decimal place format.\\
+wd: wind direction in integer 3 digit wide format.\\
+wv: wind velocity in real 4 digit wide, 1 decimal place format.\\
+
+The third line specifies the name of the output file containing the
+cloud base height algorithm \cite{srpwsaic} derived products in the format:
+
+\begin{center}
+cbh 1, prh 1, ath 1, cbh 2, prh 2, ath 2, cbh 3, prh 3, ath 3
+\end{center}
+\noindent
+where,
+\noindent
+cbh x: cloud base height layer x\\
+prh x: peak return height layer x\\
+ath x: apparent top height layer x\\
+
+All in metres and in real numbers format, 7 digit wide, no decimals.
+
+The fourth line specifies the name of the output file containing all
+the optical extinction profiles in rows of 100 data points 10 digits
+wide, exponent with 3 decimal places.
+
+The fifth line specifies the name of the output file containing the
+derived optical properties in the format:
+
+\begin{center}
+	{\tt nl,op1,op2,op3,me1,me2,me3}
+\end{center}
+\noindent
+nl: number of cloud layers detected in a given profile.\\
+opn: optical depth for cloud layer n.\\
+men: mean optical extinction for cloud layer n.\\
+
+All derived from integrating the extinction profile 
+generated using the Klett inversion algorithm over the cloud
+layer \cite{jdk1}. 
+
+The sixth line specifies the name of the output file containing the
+meteorological parameters read in from the sonde data
+correlated with the clouds optical and geometric properties at the cloud
+base, mid or top height in the folowing format:
+
+\begin{center}
+		{\tt ht,1x,ct,1x,od,1x,me,2x,tp,1x,rh}
+\end{center}
+\noindent
+nx: n character space(s)\\
+ht: base, mid-cloud or top height in metres in real 7 digit wide, 
+no decimal place format.\\
+ct: cloud geometric thickness in metres in real 7 digit wide, 
+    no decimal place format.\\
+od: optical depth, in real 10 digit wide, 3 decimal place format.\\
+me: mean optical extinction in 1/km, in real 10 digit wide, 
+    3 decimal place format.\\
+tp: temperature in degrees Celsius in real 8 digit wide, 
+    1 decimal place format.\\
+rh: relative humidity in percent in integer 4 digit wide format.\\
+
+The seventh line specifies the name of the output file containing the
+identical optical extinction profiles in rows of 100 data points 10 digits
+wide, exponent with 3 decimal places specified in line four, but with 
+each profile preceeded by cloud base height algorithm \cite{srpwsaic}
+derived products in the
+format described for the file specified third line for that given
+profile.
+
+The eigth line specifies the name of the output file containing the
+derived optical properties in the format:
+
+\begin{center}
+	{\tt nl,op1,op2,op3,me1,me2,me3}
+\end{center}
+\noindent
+nl: number of cloud layers detected in a given profile in a 2 wide integer.\\
+opn: optical depth for cloud layer n in exponent 
+     10 wide, 3 decimal place format.\\
+men: mean optical extinction for cloud layer n in exponent 
+     10 wide, 3 decimal place format.\\
+
+All derived from ratioing the signal just above and below the
+intervening cloud.
+
+The ninth line specifies the name of the output file 
+containing the non-range corrected version of the original backscatter
+profile in the rows of 100 points formatted in real numbers, 
+7 wide, no decimals.
+
+The tenth and final line specifies the name of the time index file 
+provided by RIVM. This file also contains the signal saturation
+status flag. The program will skip the first 13 columns and read
+the single character in column 14 which is either a j or a n.
+j positive is and n means no saturation.
+
+Although not necessary, it useful to adopt some sort of naming
+convention to keep track of these different files as has been
+demonstrated above.
+
+\section{Installing KNMI2B2 and CirrusWare}
+
+To install KNMI2B2 and the other CirrusWare software,
+place the installation floppy disk in drive A
+and type:
+
+\begin{center}
+	$>$A:$\backslash$setup.bat
+\end{center}
+
+The software will be automatically loaded into a newly created 
+directory called CirrusWare. To create an applications window simply
+run Windows, click on the file manager icon, locate TRY
+and KNMIED2 in the CirrusWare directory and drag them to
+the applications window or one that you have created for
+CirrusWare. 
+
+\section{Tutorial}
+
+To become familiar with KNMI2B2 follow these steps:
+
+If the package has been installed, and you are running 
+the software from MS/DOS, change to the CirrusWare directory and ensure
+that the following files are present:
+
+
+\noindent
+{\tt
+9321600.DAT\\
+93216RIV.DAT\\
+93216RIV.T\\
+KNMI2B2.FOR\\
+KNMI2B2.EXE\\
+KNMI2B2.LIS\\
+PARA.DAT\\
+TRY.BAT\\
+KNMIED2.BAT\\
+EMACS.EXE\\
+EMACS.HLP\\
+EMACS.RC\\
+}
+
+\noindent
+The source code will be listed in KNMI2B2.FOR. To run the program, type
+
+\begin{center}
+	$>$try
+\end{center}
+\noindent
+at the DOS prompt. If you are running it under Windows 3.0, find the
+applications group:
+\begin{center}
+		CirrusWare
+\end{center}
+\noindent
+and click on try.
+
+This batch file will delete any existing output files if they exist
+and open the file para.dat with a MicroEMACS editor. Change or adjust 
+the parameters of interest as desired by moving the cursor, inserting 
+text and using the delete keys as required. For more details on the
+editor use the $<f6>$ key to expand the help window while it is running.
+
+To use the editor for any other application simply type:
+\begin{center}
+		C:$\backslash$emacs $<filename>$
+\end{center}
+\noindent
+Once the necssary changes have been made, type $<CTRL>$-X-S to save the
+settings and $<CTRL>$-X-C to exit the editor and begin the program.
+
+KNMI2B2 will display a short identifcation logo, followed by 
+prompts pertaining to the trace it is currently analysing.
+A TRACE ANALYZED will appear as the analysis is completed for each trace.
+It will indicate that the process is complete when a 
+
+\begin{center}
+		...it is finally DONE 
+\end{center}
+\noindent
+appears. Upon examining the directory you have been running in
+you will find the following additional new files:
+
+
+\noindent
+{\tt 93216AND.DAT\\
+93216CLB.DAT\\
+93216MIX.DAT\\
+93216NRC.DAT\\
+93216OP2.DAT\\
+93216OPT.DAT\\
+93216TRU.DAT\\
+93216PRO.DAT\\
+}
+
+
+These can now be graphically displayed using Origin as discussed
+earlier. This can be repeated as many times as necessary in order
+for you to become more familiar or optimize the program parameters
+for a particular data set.
+
+You may decide you want to modifiy some part of KNMI2B2 at some
+point. In such case you can click on, in Windows, or type, in DOS:
+
+\begin{center}		
+			$>$KNMIED2
+\end{center}
+
+\noindent
+This batch file launches the emacs editor to open the source
+code for KNMI2B2. Onces edits have been made, saved and the file 
+closed, and if the Microsoft MS-FORTRAN 5.1 Compiler is installed
+on your system, it launches the Programmers Workbench. To create
+the new executable, using the mouse, pull down the MAKE menu and 
+click on MAKE KNMI2B2.
+
+Once it is compiled and linked an executable will be created, if
+the code passes without errors. Exit the compiler using the $<ALT>-<F4>$
+combination. You can now run the modified program.
+
+\section{Examples of KNMI2B2 Outputs:}
+
+The following figures have been produced from data processed
+by the the software package KNMI2B2.
+
+The software  package Origin by MicroCal Software Inc. a Windows 3.0
+application has been used to present the data here. 
+Grey-scale plots require the use of the 3D version
+of Origin. Please consult the documentation that accompanies
+Origin and MicroCal for more details.
+
+Figure~{3.4} is a grey-scale plot showing the backscatter
+intensity time series of the lidar returns for the day 93216 (August 4th, 1993) 
+without range correction (file 93216nrc.dat).
+
+\begin{figure}
+\vspace{5.0in}
+\caption{Grey-scale plot showing the backscatter
+intensity time series of the lidar returns for the day 93216 (August 4th, 1993) 
+without range correction (files 93216nrc.dat)}
+\end{figure}
+
+Figure~{3.5} shows a plot of the file 93216clb.dat, indicating the
+detected cloud base, peak signal return height and apparent cloud
+top height for this day also.
+
+\begin{figure}
+\vspace{5.0in}
+\caption{Plot of the file 93216clb.dat, indicating the
+detected cloud base, peak signal return height and apparent cloud
+top height for the day 93216 (August 4th, 1993)}
+\end{figure}
+
+Figure~{3.6}, is a grey-scale plot of the optical extinction derived
+from the backscatter intensity for that day also, using the Klett
+Inversion, it is generated from the file 93216opt.dat \cite{jdk1}.
+Note the bands of high values along the top edge of the
+time-series. These are the result of overestimates in the 
+inversion boundary condition. As discussed it expected that 
+the effect such errors will dissapate and the 
+resultant profile should be accurate to within 10\% of 
+the actual value below $1500 m$.
+
+\begin{figure}
+\vspace{5.0in}
+\caption{Grey-scale plot of the optical extinction derived
+from the backscatter intensity, for the day 93216 (August 4th, 1993), 
+using the Klett Inversion}
+\end{figure}
+
+A time-series of the mean optical extinction and cloud optical depths
+can be generated from the 93216op2.dat or 93216tru.dat files. The former
+values are derived from the optical extinction profiles derived by using
+the Klett Inversion \cite{jdk1} whereas 
+the latter are values derived by comparing
+the signal above and below the cloud {\em (ie. the ratio method)}
+as discussed in the previous chapters.
+By plotting the values of mean optical extinction or optical dpeth 
+derived from both methods, against each other, the success of the
+inversion can be gauged. See Figures~{3.7-3.8}.
+
+\begin{figure}
+\vspace{5.0in}
+\caption{Time-series of the optical depth
+generated from the 93216op2.dat file}
+\end{figure}
+
+\begin{figure}
+\vspace{5.0in}
+\caption{Scatter plot comparing the cloud 
+optical depths generated from both 
+93216op2.dat and 93216tru.dat files}
+\end{figure}
+
+Finally, plots of cloud optical or physical data correlated 
+with meteorological data
+measured by sonde that day can also be generated from the file
+93216mix.dat. Figure~{3.9} shows
+a scatter plot of cloud optical extinction is compared with temperature
+at mid cloud height.
+
+\begin{figure}
+\vspace{5.0in}
+\caption{Scatter plot of cloud optical extinction compared with temperature
+at mid-cloud height}
+\end{figure}
+
+Comparable parameters in the file 93216mix.dat as stated previously
+include: mid-cloud or base or top height, cloud geometric thickness,
+opitcal depth, mean optical extinction, temperature and relative humidity.

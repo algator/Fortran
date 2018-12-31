@@ -1,0 +1,327 @@
+\chapter{Conclusions}
+
+\section{Diagnosis: Current Condition}
+
+The fundamental aims of this work have been 
+three fold:
+
+\begin{itemize}
+\item Establishment of quality and limits of data
+\item Creation of a software environment for analysing
+cloud lidar data
+\item Insight into future research directions
+\end{itemize}
+
+\noindent
+These goals have been met and will hopefully be the begining
+of a continued effort to understand and characterize clouds
+through the use of lidar technology.
+
+As this software and documentation are in final
+development, the data being collected from the RIVM truck-mounted aerosol
+lidar is less than satisfactory. Among the problems include limited
+range which excludes a vast majority of the clouds of interest and
+places many of the tops of clouds recorded out of reach thereby making
+inversion for optical extinction impossible. 
+
+As the system is designed
+for the purposes of boundary layer aerosol detection,  much of the cloud
+data is over the recording range of the digitizer and is
+``saturated'' numerically. That is, a flattening at the maxima of the
+signal occours. In addition, a problem from saturation of the solid-state
+detector has been observed. It is evident that high signals can induce
+afterpulsing in the avalanche photodiodes resulting in artifact signals
+above the cloud.
+
+This also limits our ability to obtain reliable
+optical characterstics of clouds. We currently identify and 
+obtain cloud base height algorithm \cite{srpwsaic} 
+information on all signals and can 
+disregard inverting saturated profiles for optical data, 
+albeit the fact that they comprise large proportions of 
+our currently available data.
+
+Some residual overlap signal at the near end of the range leads to
+difficulties for the cloud base algorithm in locating the bottom
+signal of very low clouds. This strong return appears as part of
+the cloud signal hence the algorithm will identify it's increasing
+values as the bottom and regard it as part of a very expansive
+cloud. No satisfactory explanation has come from the RIVM regarding
+this problem.
+
+Negotiations with the RIVM have been underway since this project
+was first proposed and included adopting a dual duty cycle
+for the system allowing it to record data at two different
+dynamic settings, one for clouds and the other for it's primary
+function, recording aerosol returns.
+
+This has been abandonned in favour of an alternate approach
+utilizing an older aerosol system not currently in use.
+The following recommendations were discussed and agreed upon:
+
+\begin{itemize} 
+\item System must be optimized-aligned for cloud-lidar measurements.
+\item The data acquisition will be set to collect 500 bins of data at a 
+vertical resolution of 20 metres, thus extending the systems range 
+capacity to 10km.
+\item Neutral density filter configuration will complement the dynamic 
+range of system 1.
+\item new data acquisition software must be implemented.
+\end{itemize} 
+
+After some delay these modifications were performed in time
+for the NASA-LITE (Lidar In-space Technology Experiment) project.
+Data has been collected in conjunction with the Space Shuttle
+overpasses as hoped, analyses are pending.
+
+\section{Future Plans: Prognosis}
+
+Even with such improvements to our measurements, the SNR for
+the molecular background is sufficently low that obtaining
+a satisfactory range of optically invertable data with the 
+available technology in the current manner will still be problematic.
+A possible remedy is to take more continuous measurements than
+the current 25 second and 4 minute rest duty cycle and averaging over longer
+time periods, thus increasing effective exposure time of the 
+systems detectors as previously discussed. The RIVM group has 
+observed some evidence of the faint molecular signal at 
+and beyond 4000 meters using this technique \cite{evpd}.
+
+Proposals are currently pending approval to develop new systems in 
+conjunction with the RIVM which will be better suited to obtaining
+cloud optical properties. These include a system with a source
+in the visible range, namely 532 nm. We expect such a system to have
+better SNR for molecular, providing us with better boundary
+conditions and hence more range in our optical inversions.
+
+Of interest yet farther into the future, will be the possible
+foray into lidar remote sensing of water vapor or atmospheric humidity.
+The Royal Netherlands Meteorlogical Institute currently relies on a 
+meteorogical tower equipped with wet and dry bulb thermometers for 
+atmospheric moisture measurements at the Cabauw meteorological site. 
+Recent advances in optical, laser and signal processing technology 
+have indicated a potential role for lidar (laser radar) in the routine 
+measurement of atmospheric moisture. 
+Tables~{5.1-5.2} offers some comparisons between 
+the two methodologies and together with some comments 
+describing the advantages/disadvantages of either technology based on the
+results produced by research systems currently in operation. 
+
+\begin{table}
+\caption{Comparison of Moisture Detection Capablitlites Between the KNMI
+Cabauw Meteorogical Tower and a potential Raman Water Vapour Lidar}
+\begin{center}
+\begin{tabular}{|l||l|l|}
+\hline
+Specification &	Tower &	Raman Lidar \\
+\hline
+\hline
+Range &	213$m$	& 3$km$ (solar-blind\\
+&& \cite{drrc}) up to\\ 
+&& 7 km (night-time\cite{dnwshmraf}\cite{shmdw})\\
+\hline
+Resolution & 20$m$ & 5--150$m$ (dependent\\ 
+&& on processing modality) \\
+\hline
+Accuracy & in-situ measurement & within$^{+}_{-}10$\%  
+when compared\\
+&&to radiosonde data above 20\% \footnote{radiosonde 
+measurements are unreliable for measurements of R.H. under 20}\\
+\hline
+Noise & N/A & 5--20\%(solar-blind, depends\\ 
+and Uncertainty & &on haze), 
+0.02\%(night-time)\\
+\hline
+Cost & unavaiable at this time\footnote{to upgrade 
+to state-of-the-art technology} & 
+approx. fl. 685.000,00\\ 
+&&(\$ 500,000.00 CAN)\cite{bs}\\
+\hline
+Special & & potential ability\\ 
+Features & & to measure other \\
+&& atmospheric species
+of interest,\\
+&& {\em ie. clouds,aerosol $CO_{2}$},\\  
+&& {\em etc.,for limited extra costs}.\\
+\hline
+\end{tabular}
+\end{center}
+\end{table}
+
+\begin{table}
+\caption{Comparison of Moisture Detection Capablitlites Between the KNMI
+Cabauw Meteorogical Tower and a potential Raman Water Vapour Lidar,
+continued.}
+\begin{center}
+\begin{tabular}{|l||l|l|}
+\hline
+Specification &	Tower &	Raman Lidar \\
+\hline
+\hline
+Other & relatively routine,& 
+currently only proven as\\
+Considerations & low maintenance & a routine night time\\ 
+& approximately  1 hour/week & 
+operation system, daylight \\
+&& system still limited mainly to \\ 
+&& research measurements. Low \\ 
+&& maintenence \\
+&& during routine operation,\\ 
+&& less than $1\over{2}$ hour\\
+&& per week apart from data\\ 
+&& download.\\ 
+&& Will require periodically,\\ 
+&& a skilled technician for \\ 
+&& maintenance, mainly for \\ 
+&& the laser component of \\ 
+&& the system. Possibly \\
+&& $1-2$ days every $2-3$\\ 
+&& months, depending on the \\
+&& duty cycle and laser\\ 
+&& specifications.\\
+\hline
+Temperature & inoperable when freezing
+& independent of outside \\
+Limits & of wet bulbs occurs & ambient temperature \\
+\hline
+Safety & N/A & with marine radar \\
+Requirements & & connected to the laser interlock,\\ 
+&& intrabeam hazard is eliminated, \\
+&& diffuse beam radiation is eyesafe.\\
+\hline
+\end{tabular}
+\end{center}
+\end{table}
+
+Raman scattering is a weak molecular scattering process, whereby 
+incident radiation is shifted by a fixed amount associated with 
+rotational and/or vibrational-rotational transitions of the molecule of 
+interest. The shift is as such particular to a molecule. It has been 
+shown that the ratio between the Raman scattered energy from water 
+vapor to nitrogen is proportional to the water vapor mixing ratio.
+
+Raman vapor lidar utilizes these two factors in remotely obtaining 
+water vapor profiles of the atmosphere. 
+
+For water vapor detection, there are currently three lidar methods 
+being used. Conventional Raman at 347 nm is restricted to night-time 
+use, due to the intervening solar background that will saturate the 
+detection system. Solar blind systems use the 266 nm line, and are 
+operational during the daytime, but have limited range by comparison.
+DIAL or DIfferential Absorption Lidar utilizes two absorption lines 
+in the 720nm range and requires two incident wavelengths. By 
+comparing the attenuation of one (on) to the other (off) it is possible 
+to determine the concentration  of an atmospheric species. It has been 
+successfully proven effective in measurements of atmospheric ozone but 
+has been shown prone to limitations for water vapor. 
+
+DIAL Water Vapour Lidar is competitve with Raman for tropospheric 
+measurements but has reduced accuracy and precision with regards to 
+boundary layer measurements. It also is prone to degradation in it's 
+vertical range resolution due to narrowing and absorption line shifts
+which result from decreasing pressure\cite{cwmrevwlwm}. 
+Although such systems have 
+proven superior to the Raman-based lidars for regions above the 
+troposhere with low resolution requirements, it is clear the for ranges 
+and levels of precision required by the KNMI, Raman is the most 
+effective methodology.
+
+In terms of long term technical direction, moving towards an 
+advanced remote sensing methodology would be beneficial for the KNMI in 
+order to maintain a competitive lead with regards to practical 
+standards of meteorological measurements. This is already the direction 
+undertaken for such routine measurements such as cloud ceiling height
+\cite{psajfacapvlgjp}.
+
+Schwiesow \cite{rls} has discussed the potential for a completely 
+self-contained, portable meteorological tower 
+with a range of 1 km as a 
+motivation for the meteorological community to move towards utilizing and
+helping to spur on the development of such technology. It is viewed 
+that as the state of the art improves such a system will move from the
+many research instruments currently in use to a commercially packaged 
+group of laser-based remote sensing devices. These systems will 
+measure all the parameters that currently rely upon in-situ devices 
+mounted on an expensive and fixed location meteorological tower. 
+Moreover all with greater precision and range. Lidar systems can 
+currently profile atmospheric aerosols, temperature, wind direction and 
+velocity, water vapor, cloud base height, apparent top height and 
+ice-water phase content, ozone, $CO_{2}$ and a host of other atmospheric gases
+and other residents of interest. 
+
+At present, active remote sensing technologies can serve to 
+complement a conventional meteorological tower array, but given the pace of 
+growth in this field it is expected to marginalize the utility of 
+the tower and eventually replace it.
+
+\subsection{Other Improvements: Far-End Extinction Coefficient 
+Inversions with Range Variable
+Backscatter to Extinction Ratios}
+
+In applying Eq.~{\ref{kfee}} to solve Eq.~{\ref{lideq}}, 
+(the {\em Klett Inversion} \cite{jdk1}), 
+it has been assumed neither the proportionality factor, $C$, 
+in Eq.~{\ref{betasig2}} nor the exponent $k$ is constant. 
+
+Several observational and theoretical studies have shown that
+under a wide range of circumstances where backscatter from
+aerosols dominate molecular ({\em ie. hazy, cloudy, foggy conditions
+in the I.R.}), we may assume this relation is valid. Although it 
+is possible formally, to account for the range dependence of $C$,  
+this requires some independent knowledge of the spatial variation
+in the atmosphere which is generally not available \cite{jdk2}.
+
+If it is possible the obtain some functional dependence 
+for the the consant $C$, such that,
+
+\begin{equation}
+\beta= B(r) \sigma^k
+\label{BR}
+\end{equation}
+
+\noindent
+where we have denoted the former constant in the relation 
+$C$ as the range dependent variable $B(r)$. This range
+range dependent variable then has a functional dependence
+to ${\sigma(r)}$ which can be writtne in the form,
+
+\begin{equation}
+B(r)=f[{\sigma_{1}}(r)]
+\label{brig}
+\end{equation}
+
+It is then it is possible to rewrite the {\em Klett Inversion} to
+accomodate for this variable.
+
+\begin{equation}
+{\sigma} = {{{B_f}\over{B}}^{1\over{k}}e^{{1\over k}(S-S_f)}\over 
+{[\sigma_f^{-1}+{2\over k}{\int^r {{B_f}\over{B}}^{1\over{k}}
+e^{{1\over k}(S-S_f)}dr\prime ]}}} 
+\label{bakvar}
+\end{equation}
+
+\noindent
+given the reference value is known,
+
+\begin{equation}
+{B_{f}}=B(r_f)
+\label{Bref}
+\end{equation}
+
+\noindent
+We can utilize this improved solution by performing 
+the basic {\em Klett Inversion} using Eq.~{\ref{kfee}}
+and deriving and intial guess for the extinction
+profile (denoted as ${{\sigma_1}(r)}$) in Eq.~{\ref{brig}}. 
+This can be used to obtain values for $B(r)$  which can be used in the
+new form of the inversion above, Eq.~{\ref{bakvar}}. 
+
+This again is of course, only valid where the scatterers are
+relatively homogeneous and still assumes the single scattering case only.
+
+A proposal may allow for a study to examine the effectiveness
+of this technique on real lidar data in the near future. This
+would be a verification of this technique
+using real data as compared to the original work which used data generated 
+by other methods. Hence, it will be an extremely worthwhile
+and enlightening project.

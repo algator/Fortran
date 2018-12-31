@@ -1,0 +1,225 @@
+\documentstyle [12pt] {thesis}
+\input{macros}
+%\input{psfig}
+
+\begin{document}
+
+\pagenumbering{roman}
+\setcounter{page}{3}
+\pagestyle {empty}
+$\;$
+\begin {center}
+\vspace{2 cm}
+{\Large\bf
+Cloud Lidar Research at The Royal Netherlands Meteorological Institute
+and KNMI2B2 Version 2 Cloud Lidar Analysis Software Documentation}
+\vfill
+{\large \bf Alexandre Y. Fong, M.Sc.}\\
+\vfill
+\vfill
+{\large The Royal Netherlands Meteorological Institute (KNMI)}\\
+\vfill
+{\large Postbus 201,\\
+	3730 AE DeBilt,\\
+	The Netherlands}\\
+{\large +33 30 206 911}
+\vfill
+\vfill
+{\large October 1994} \\
+\end {center}
+\vspace {1 cm}
+$\;$
+\clearpage
+
+%\DOUBLESPACE
+\pagestyle {headings}
+\begin {Large}
+\begin {center}
+{\bf Document Description}
+\end {center}
+\end {Large}
+\vspace{1 cm}
+\addcontentsline{toc}{chapter}{Document Description}
+
+Clouds are without a doubt a critical piece in the climatological puzzle.
+Specifically, the interaction between clouds and radiation form a
+linchpin in fundamental understanding of both the
+Earth's hydrolgical as well the radiative budgets. The Tropospheric
+Energy and Water Budget Experiment (TEBEX) being performed by the
+Atmospheric Research Section of the KNMI is motivated by this
+interest. TEBEX combines an extensive set of observations from 
+satellite, and passive and active ground-based sensors with input
+from modellers. The goal is gain detailed insight into a 
+$130{\times}130$km$^{2}$
+area covered by 10 ground observation sites know as the Cloud Detection
+System (CDS). Further details of the CDS program in its entirety are
+given elsewhere \cite{psajfacapvlgjp}. 
+
+The objective of the KNMI-TEBEX Lidar component are to obtain a set of cloud
+optical and physical data as derived by lidar for comparison and analyses
+with satellite data in a research aimed at exploring the Earths Radiation
+Budget (ERB). To that end, software has been developed to 
+process such lidar measurements to obtain the salient information.
+This information includes: cloud base and top height, peak signal altitude,
+physical thickness, optical extinction and depth. 
+
+KNMI2B  is  a software package specifically created for 
+the analysis of lidar (laser-radar) data obtained from the National 
+Institute of Public Health and Environmental Protection (RIVM)
+Laboratory for Air Quality Research aerosol lidar system in 
+Bilthoven, The Netherlands for use by the 
+Royal Netherlands Meteorological Institute (KNMI) in De Bilt, The Netherlands. 
+
+This study was contracted as part of a scientific consulting contract on
+cloud lidar studies by Dr. Andr\'{e} Van Lammeren of  The KNMI. The 
+software was designed and authored by 
+Mr. Alexandre Y. Fong as per Dr. Van 
+Lammeren's requirements and specifications.
+Ownership of this software is shared by Dr. Van Lammeren, Mr. Fong 
+and The KNMI. These parties assume no liability for damage to devices
+or existing software that may result from its subsequent use.
+
+KNMI2B incorporates widely used algorithms and defintions to derive optical
+and phyisical properties of interest and insight to those studying the 
+effects and contributions of cloud to climate and atmosphere. The source
+code is written in Microsoft FORTRAN 5.1 and incorporates an algorithm 
+developed by the Institute for Space and Terrestrial Science (ISTS) in 
+Toronto, Ontario, Canada by Dr.'s Allan I. Carswell, Shiv R. Pal, 
+Wolfgang Steinbrecht.
+
+\noindent
+KNMI2B obtains the following parameters:\\
+
+\begin{itemize}
+\item Cloud Base Altitude
+\item Cloud Peak Signal Return Altitude
+\item Apparent Cloud Top
+\item Mid-Cloud Altitude
+\item Cloud Mean Optical Extinction [calculated from both the integrated
+Klett inverted extinction profile and by comparing the above and below 
+cloud background]
+\item Optical Extinction (profile)
+\item Optical Depth
+\end{itemize}
+
+KNMI2B2 also identifies and obtains cloud base height 
+algorithm information but can, if the operator chooses to,
+disregard inverting saturated profiles for optical data.
+KNMI2B also provides output that has sonde information correlated to 
+cloud base height optical and physical information listed above.
+
+\clearpage
+
+\begin {Large}
+\begin {center}
+{\bf Acknowledgements}
+\end {center}
+\end {Large}
+\vspace{1 cm}
+\addcontentsline{toc}{chapter}{Acknowledgements}
+
+The author wishes to acknowledge the assistance and cooperation
+of Eric Visser, Hans Bergwerth, Arnout Apituley and Daan Swart of the 
+National Insititute of Public Health and Environmental Protections (RIVM),
+Laboratory for Air Quality Research.
+
+Special thanks to Dr. Andr\'{e} Van Lammeren and Carin, Joris, and Roos 
+Van Lammeren for their kind hospitality and friendship. Special thanks
+to Andr\'{e} for his insight and suggestions which kept the momentum
+of this work going. 
+
+Thanks also Pieternel Levelt and Wim Vassen for their friendship and
+company, Arnout Feijt and Piet Stammes for all their advice
+and techincal assistance with this project, Ronald 
+Weber and Wieger Fransen for making
+their home mine, Barbara Bongers, Sigrida Shperlina, Ad, Paul and Hanna, 
+and making the bus rides to and from DeBilt shorter, 
+Glenn (like a father to me!), Naci, Baelul, Sunil, Bibi, Lydia, Audrey, 
+Everet, Ron Grovers (thanks for the postcard) and everyone else
+at Gravenbeek's (the friendliest place in Holland!) 
+and everyone else at the KNMI for making my stay a pleasant one.
+
+Special thanks to the people of Optech Inc.: 
+Adelhied Freitag, Dino Lenarduzzi, Taner Machupyan,
+Victor Gorin, Martin Flood, Michel
+Stanier, Larry Mitchel, Jim Bottoms, Rob Murenbeeld and Wayne Sziemetat 
+for keeping me company and up to date on all the great gossip back home,
+away from home. Thank you to Doug and Lorraine Houston at Optech and
+Linda and Allan at the Harry Sherman Crowe Co-op
+for also helping me keep all things residential under control back home.
+
+Very special thanks to Stefan Mihalov, Michel Stanier, 
+Adelhied Frietag, and the Steinbrechts
+of M{\"{u}}nchen for all their kind hospitality in showing me their
+special parts of Europe. Thanks to Victor Gorin, Bill Dykshoorn and 
+Pam Dillon {\em (and friend)} for dropping by.
+
+Thanks to all the other folks who sent me email and let
+me share in their lives this last summer: Paul Fairlie, 
+Dwaine Plaza, Denise, Jan McQuay, Sandra Scott and Dave Tatar.
+
+As always thanks to Dr.'s Allan I. Carswell and Shiv R. Pal for their
+support and wisdom throughout the years which made all this work
+possible.
+
+Kudos to all at the {\bf\sl Cirrus Technology Consulting} home office
+in Toronto for a job well done.
+
+Finally, thank you to as always my parents, for their love and support. 
+
+\newpage
+\noindent
+``But trouble can come to nice places, too; trouble travels,
+trouble visits. Trouble even takes holidays from the places
+it thrives, from places like St. Cloud's.''\\
+
+
+\noindent
+``What is hardest to accept about the passage of time
+is that the people who once mattered the most to us
+are wrapped up in parenthesis.'',\\
+John Irving, {\em The Cider House Rules}\\
+
+\vspace{0.1in}  
+\noindent
+``Life is what happens when you're making other plans'',\\ 
+John Lennon\\
+
+\vspace{0.1in}  
+\noindent
+``...and I am oughta here!'',\\
+Dennis Miller, Weekend Update: Saturday Night Live\\
+
+\vspace{0.2in}  
+\noindent
+\copyright 1994, {\bf\sl Cirrus Technology Consulting Press} 
+\clearpage
+
+\baselineskip = 3.0ex
+
+\addcontentsline{toc}{chapter}{Table of Contents}
+\tableofcontents
+\clearpage
+\addcontentsline{toc}{chapter}{List of Tables}
+\listoftables
+\clearpage
+\addcontentsline{toc}{chapter}{List of Figures}
+\listoffigures
+\clearpage
+
+\pagenumbering{arabic}
+%\DOUBLESPACE
+\setcounter{page}{1}
+\include{ch1}
+\include{ch2}
+\include{ch3}
+\include{ch4}
+\include{ch5}
+\clearpage
+
+\baselineskip = 3.0ex
+
+\bibliographystyle{unsrt}
+\bibliography{alex2}
+
+\end{document}

@@ -1,0 +1,1190 @@
+%Documentation [2nd draft]
+\chapter{Lidar Fundamentals}
+
+% 1. lidar concepts and theory > backscatter and extinction
+
+A typical atmospheric lidar system is comprised of two major
+components: a transmitter, (ie. laser source), 
+which sends out a light beam of controlled characteristics through 
+the portion of the atmosphere of interest
+and a receiver which detects the energy backscattered into 
+it's field-of-view (FOV). 
+This backscattered signal contains information on the scattering and absorption
+processes taking place within 
+that portion of atmospheric medium probed by the beam. If the lidar-atmosphere
+interactions are understood then an inference can be made 
+as to the composition or condition of the atmosphere.
+With short pulse laser sources the time of flight of the return
+pulse provides excellent range resolution. 
+
+Two configurations of the transmitter-receiver are utilized
+in lidar systems. The bistatic configuration places the transmitter 
+and receiver at different locations.
+% and is of particular interest
+% for studies of depolarization of the incident radiation
+% by the atmosphere\cite{aic1}.
+All of our work has been performed on the more common 
+monostatic configuration, where the transmitter 
+and receiver are located together.
+Our monostatic system has the transmitter and receiver axes aligned
+collinearly. Fig.~{1.1} is a schematic of this configuration.
+Monostatic lidar consequently relies upon measurement
+of energy scattered at $180^{o}$ from the incident beam source.
+By utilizing a laser source with short pulse lengths,
+high repetition rates and large energies, and consequently
+high average power, weak interaction phenomena 
+at distant ranges can be examined with high spatial resolution
+and good signal-to-noise ratios (SNRs).
+
+\begin{figure}
+\vspace{5.0in}
+\caption{Schematic of the monostatic, biaxial lidar configuration
+utilized. The laser and telescope comprise the transmitter and receiver,
+$x$ is the overlap range.}
+\end{figure}
+
+The overlap range, $x$, is defined as the
+range at which there is full overlap of the receiver FOV with the
+transmitter beam.
+Beyond this range the signal decreases inversely as the square of the
+distance in a homogeneous atmosphere. At closer ranges 
+the backscatter intensity increases rapidly
+as the transmitter's beam falls within the receiver's
+FOV. This intense region of backscatter
+is often suppressed in many lidar configurations to
+reduce demands on the detector's dynamic range.
+
+For the lidar system we are concerned with, this portion of 
+the range lasts for up about 800 m (5 us) and has a 
+maximum signal of over 500 mV (the maximum range of the digitizer). A cloud 
+layer signal (with the current optical attenuation settings on our receiver 
+is about 50 mV). The noise level is about 1-2 mV.
+ 
+Please note the two-way path involved in the time/distance discussion above.
+
+\subsection{The Lidar Equation}
+
+If only single scattering events are assumed to redirect the photons
+to the receiver as they travel through their atmospheric path
+then the well known lidar 
+equation can be considered valid \cite{aic2}:
+ 
+\begin{equation}
+P(r)={P_0}{c\tau\over2}{A\beta (r)\over r^2}
+e^{[-2\int_0^r{\sigma (r\prime)dr\prime}]} \label{lideq}
+\end{equation}
+
+\noindent
+Where,
+\noindent
+\begin{tabbing}
+$\tau$ \hspace{0.2in}\= = the pulse duration\\
+$P(r)$ \>= the instantaneous received power from range $r$\\
+\> at time $t$\\
+$P_0$ \>= the transmitted power at time $t_0$\\
+$c$ \>= the velocity of light\\
+$A$ \>= the effective system receiver area\\
+$r$ \>is the range $[={c(t-t_0)\over2}]$\\
+$\beta(r)$  \>is a measure of the incident laser power backscattered\\
+by the atmosphere per solid angle and per unit path length\\
+and is known as the volume backscatter coefficient.\\
+$\sigma(r)$ \> is the signal attenuation per unit length from the lidar beam\\ 
+due to the scattering and absorption of the incident radiation\\ 
+and is known as the attenuation or extinction coefficient.\\
+\end{tabbing}
+The nominal vertical (spatial) resolution of lidar $(\Delta z = c\tau/2)$
+is determined by the length of the laser pulse.
+The horizontal resolution is a function of the
+beam divergence. Current laser systems are capable of producing
+pulse durations on the order of $10$ns, as is the case for
+our system. Furthermore beam divergences are typically on the
+order of $1$mrad. This results in spatial resolution unattainable
+by any other atmospheric remote sensing technique.
+
+\subsection{The Volume Backscatter Coefficient}
+
+The fractional amount of incident energy scattered per steradian 
+back into the receiver per unit path length is 
+given by the volume backscatter coefficient,
+$\beta$. The $\beta$ has units of ${m^{-1}}{sr^{-1}}$
+and is the result of scattering contributions 
+from all atmospheric constituents. $\beta$ is often
+expressed as,
+
+\begin{equation}
+\beta = {\sum_{i}}{\beta_{i}} = 
+{\sum_{i}}{N_{i}} d\Sigma {(\pi)_{i}}/d\Omega 
+% = \sigma_{s}{\frac{P_{\pi}}{4\pi}}
+\label{backall}
+\end{equation}
+
+\noindent
+for all $i$ atmospheric scattering species with number density $N_{i}$, 
+and backscatter cross section $d\Sigma {(\pi)_{i}}/d\Omega$.
+The latter varies in magnitude from the order of ${10^{-8}}{cm^{2}}{sr^{-1}}$
+for aerosol particles to below ${10^{-28}}{cm^{2}}{sr^{-1}}$
+for scattering due to Raman effects. The wavelength
+dependence of the backscatter cross section also makes $\beta$ 
+a wavelength dependent quantity \cite{agc}\cite{aic2}.
+The $\beta$ may also be expressed as the product of the
+volume scattering coefficient $\sigma_{s}$ and 
+the backscatter scattering phase function $\frac{P_{\pi}}{4\pi}$
+
+\begin{equation}
+\beta = \sigma_{s}{\frac{P_{\pi}}{4\pi}}
+\label{backall2}
+\end{equation}
+ 
+\subsection{The Volume Extinction Coefficient}
+
+One of the most fundamental and important optical
+parameters measured by lidar is the volume extinction coefficient
+$\sigma$, defined as the extinction cross section
+per unit volume with units of ${m^{-1}}$. 
+In the integral in Eq.~{\ref{lideq}},
+$\sigma$ represents a summation of all the atmospheric attenuation processes 
+affecting the pulse in its two-way path through
+the atmosphere. It is most commonly expressed as,
+
+\begin{equation}
+\sigma = {\sigma_{a}}+{\sigma_{m}}+{k_{a}}+{k_{m}}
+\label{exall}
+\end{equation}
+
+\noindent
+where ${\sigma_{a}}$ and ${\sigma_{m}}$ are extinction
+coefficients due to scattering from atmospheric aerosol and 
+molecular constituents, respectively. ${k_{a}}$ and ${k_{m}}$
+are similarly the aerosol and molecular extinction
+coefficients resulting from atmospheric absorption.
+${k_{m}}$ is strongly wavelength dependent in comparison
+to the other coefficients. At many wavelengths, strong
+molecular absorption limits the propagation of
+the transmitter signal and hence the utility of lidar.
+Careful selection of incident frequencies within
+the so-called {\em atmospheric windows}, where $k_{m}$ is
+negligible, provides a remedy to this problem \cite{agc}\cite{aic2}.
+
+For studies of clouds, $\sigma_{a} \gg \sigma_{m}$ and we need only consider 
+a single term, $\sigma$, resulting from the scattering of the cloud 
+particles. Related quantities
+of cloud depth and mean volume 
+extinction coefficient also are often useful.
+In terms of the volume extinction
+coefficient we define the optical depth of the cloud as, 
+
+\begin{equation}
+ \tau  = \int_{r_{b}}^{r_{t}} {\sigma}(r) dr 
+\label{opdep}
+\end{equation}
+
+Given cloud base and top altitudes, 
+(${r_{b}}$ and ${r_{t}}$, respectively), the 
+{\em mean volume extinction coefficient} 
+for the cloud may then be defined as, 
+
+\begin{equation}
+\overline{\sigma} = {\tau}/({r_{t}}-{r_{b}}) 
+\label{meanex}
+\end{equation}
+
+\cite{cmrpjcsacd}. 
+  
+\subsection{Multiple Scattering}
+
+Equation \ref{lideq} is less representative of backscattering 
+in cases of higher turbidity where 
+multiple scattering effects dominate. Such 
+is the case for dense clouds and certain atmospheric aerosols.
+
+Fig.~{1.2} is a very simplified illustration of the contributions from multiple
+scattering to the backscatter in turbid media.
+As the beam enters into the cloud the beam is broadened by
+forward scattering due to the cloud droplets.
+The three regions: A,B and C represent the continuation
+of the original beam, the broadened beam still in the 
+receiver's field FOV and outside the receiver's FOV,
+respectively. Region A is predominantly the result of
+single scattering whereas B and C are strictly due
+to multiple scattering; the latter being the result
+of at least the initial scattering incident and subsequent
+events redirecting the photons back into the receiver's FOV.
+In actuality, photons may undergo many more
+scatterings within and outside the receivers FOV 
+making the problem all the more complex \cite{aic1}. 
+
+\begin{figure}
+\vspace{4.0in}
+\caption{Schematic representation of lidar beam
+behavior in a turbid medium [32]}
+% Re-check this reference number!!!!!!!!
+\end{figure}
+
+The degree of multiple scatter is a function of 
+two main processes: the angular dependence of the scattering
+and the rate at which multiple scattering occurs.
+These are dictated by the medium's composition,
+scatterer optical properties and number densities.
+However, the measured contribution to multiple scattering
+is also dependent upon the beam divergence and
+the target medium's range from the lidar. Any multiple 
+scattering lidar equation will necessarily be more complex 
+than in Eq.~{\ref{lideq}} \cite{lrbdlh} \cite{cwjshhhgd}.
+% Cite Bissonnette reference!
+
+Efforts to include such effects remain an active field 
+of inquiry. At present there exists no widely accepted modification of
+Eq.~{\ref{lideq}} which adequately includes multiple scattering effects.
+% input from Dan!
+% Modelling techniques such as Monte Carlo simulations
+% have been applied in an effort to reproduce actual measured effects.
+Several radiative transfer model approximations as well
+as time dependent multiple scattering models have been developed
+\cite{kekjaw}\cite{jvdjg}\cite{dgcwgbmbwhgh}. 
+The advent of low cost, 
+high speed computing platforms have permitted some
+advances but at present 
+there exists no adequate atmospheric radiative
+transfer models which fully account for multiple scattering 
+in the lidar equation. 
+The spatial ambiguity of the scattering volume
+due to multiple scattering 
+also degrades the time-dependent range resolution of lidar
+since there is no longer a direct proportionality between the distance
+to the scattering volume and the time of flight of the pulse.
+
+%The main emphasis in this report is directed to relatively 
+%dilute cirrus clouds in which multiple scattering contribution
+%is negligible. Even in the denser, low clouds our receiver FOV
+%is so small $(\sim 0.3\;mrad)$ that the contribution from multiple
+%scattering will be too small to alter any conclusions of 
+%the analyses undertaken in this report. 
+%As it is not essential to the work covered in 
+%this report, we will not elaborate further on multiple scattering. 
+%
+\subsection{Cloud Lidar Measurements}
+
+Due to the large scattering cross-sections of the particles involved,
+clouds induce large backscatter. 
+As mentioned above the effects of multiple scattering
+can introduce difficulties into the interpretation of
+some lidar cloud {\em signatures}. 
+By noting the lidar signal 
+from the atmosphere above the cloud,
+one can determine the level of signal 
+penetration of the beam.
+This aspect is particularly important to 
+ensure that lidar has penetrated low-level 
+dense clouds composed primarily of water droplets
+\cite{agc}\cite{aic2}. However, there are 
+many of these clouds for which the lidar
+probing range is only one or two hundred metres.
+Thus lidar data are limited by the ability of the beam to penetrate 
+the cloud.
+
+Lidar excels at defining cloud spatial distribution,
+particularly cloud base altitudes and geometric thicknesses.
+This has spawned the development of commercial ceilometer instruments
+for the routine monitoring of cloud bases for use in aviation
+\cite{wle}\nocite{wle2}--\cite{ned}. Although the inversion of 
+lidar returns for the purpose of extracting atmospheric optical
+parameters presents challenges, lidar offers measurement of such
+quantities with unparalleled temporal and spatial resolution.
+In clouds, the lidar scattering signature 
+is an indicator of a cloud's interaction with solar 
+radiation\cite{agc}\cite{drknl}. 
+The combination of lidar and narrow beam radiometer
+measurements {\em (LIRAD)} has shown much success
+in furthering our knowledge of cloud
+radiative properties \cite{cmrp1}
+\nocite{cmrpacd2}\nocite{cmrph}\nocite{cmrpacd1}\nocite{cmrp2}
+\nocite{cmrpjcsacd}--\cite{cmrpjdswdh}.
+% - Think it's okay now. (Fix up this citation listing !!!!)
+
+\section{Extinction Coefficient Inversions}
+
+% Need a little intro material for that section
+% saying what you are doing.
+
+The reliable extraction of attenuation and backscatter 
+parameters from lidar returns by inversion methods has been
+a long standing and relatively unfulfilled goal of lidar researchers.
+A number of factors, ranging from technological limitations
+to theoretical constraints, have prevented the successful 
+development of satisfactory inversion processes.
+Particular interest has been given to obtaining
+accurate values of the volume extinction coefficient
+for reasons discussed in Sec.~{2.1.2}.
+
+The {\em Inverse Problem} is central to all
+optical remote sensing techniques. As is clear from Eq.~{\ref{lideq}},
+the observable $P$ is dependent upon a number of
+parameters. Most are system dependent and as such
+can be determined in a relatively direct manner. 
+The two atmospheric parameters, $\beta$ and $\sigma$, must be determined
+by solving or ``inverting'' the equation.
+% remaining unknowns are
+% also the two quantities we are charged with the task of ascertaining. 
+Both parameters are unique to the particular 
+atmospheric optical situation we are attempting to
+determine. This one-to-many mapping from
+$P$ to these atmospheric parameters results
+in an infinite number of combinations for the inversion solution.
+Such an inverse problem is thus ill-posed or underdetermined.
+
+To proceed, what is required are some constraints
+to limit the possible solution set, and to
+reduce the underdetermination of this problem.
+In one approach, many measurements of $P$ are obtained 
+with a controllable varying parameter such as
+incident wavelength or beam angle. With the resultant simultaneous equations
+% as to the wavelength or angular interdependence of our measurements 
+the problem becomes solvable.
+Such schemes often require complex measurement methods
+% elaborate technological means 
+and even so, are subject to the stringent limitations
+of the assumptions utilized.
+%  These assumptions are the product of idealized
+% theoretical analyses and by no means definitive
+% in the highly variable and non-ideal real atmosphere.
+
+For inversions of monochromatic monostatic lidar
+where one has only a single measurement of $P$, it
+is necessary to add some additional information, usually in
+the form of an assumed  
+% is obtained, this issue becomes all the more
+% pressing. In this case 
+functional relationship between the unknowns,
+$\beta$ and $\sigma$. 
+% This section needs to be re-organized !!!! 
+%\subsection
+% When lidar eq'n is introduced make some comment about the problem 
+% of 2 unknowns sigma, beta and need to add additional info such as
+% beta/sigma ratio. Then refer to it here.
+% As discussed in Sec.? , with respect to solutions of the lidar equations,
+% In deriving such inversion algorithms a simplifying assumption, 
+% between the relationship between the backscatter coefficient and the
+% extinction coefficient is made. 
+There is physical basis for 
+this assumption, however in this report no attempt 
+is made to describe this in detail. \cite{jdk1}.
+% Although some further discussion is given in Sec.?.
+%
+% The optical parameters  $\beta$ and $\sigma$
+% are dependent upon the microphysical scattering 
+%properties of the atmospheric medium \cite{gdlgjkcwl}. 
+% As previously discussed in Sec.~{2.1.2}, $\beta$ describes 
+% the sum of all backscattering from all the aerosol species present at
+% the time of measurement, for example.
+%
+% Was this done earlier?
+%\begin{equation}
+%	 \beta=\sum {n_{i}}\Omega_i 
+%\label{beta}
+%\end{equation}
+% ...where $n(r)$ is the number density of the species $i$ and $\Omega_i$
+% is the per particle backscattering cross-section of the species. 
+
+% The number of factors which $\beta$ and $\sigma$ are dependent upon make it
+% difficult to define a reliable relationship 
+% for most atmospheric conditions 
+% except for instances where one constituent dominates. 
+% This is often true at high altitudes where
+% only molecular components exist or in the lower troposphere where large
+% aerosol cross-section contributions are orders of magnitude 
+% larger than those of the molecular components. It is possible in such cases 
+% to derive values such as the number densities of such components 
+% \cite{aic1} from the lidar-derived $\beta$ values.
+% This commentary would be better to come after eqn's 
+% 2.25 and 2.26 gave been introduced!
+%          ^^^^ has been deleted!
+% Unfortunately, the myriad of processes involved in the formation and decay
+% of natural aerosols pose additional difficulties in obtaining
+% a valid relationship between backscatter and visibility 
+% and subsequently extinction even under these conditions\cite{rwf}.
+% 
+% I think that details of values etc., would be better
+% given as needed in the discussion of the results
+% where beta and sigma are measured.
+
+Conventionally, the isotropic backscatter-to-extinction 
+ratio has been defined as \cite{cmrpjcsacd}:
+
+\begin{equation}
+C=\beta(\pi,z)/{\sigma(z)^{k}}
+\label{betasig2}
+\end{equation}
+
+\noindent
+where $\beta(\pi,z)$ is the volume backscatter
+coefficient and $\sigma(z)$ is the volume extinction coefficient. 
+Eq.~{\ref{betasig2}}, with $k=1$, is widely used to permit the solution
+of Eq.~{\ref{lideq}} \cite{jdk1}.
+% At $532nm$, Mie calculations are accurate for a given cloud drop
+% size distribution for water clouds. $C$ is approximately $0.057sr^{-1}$.
+% Generally clouds are given as 0.044 and dry aerosols as 0.024 \cite{wcrr}.
+% For ice clouds there is uncertainty in such calculations for both 
+% the extinction coefficient and $C$. From combined lidar and radiometer
+% ({\em lirad}) observations, values for cirrus have been obtained at various
+% altitudes and temperatures. For clouds below $-40^{o}C$, $C=0.013sr^{-1}$.
+% \cite{cmrpjcsacd}.Fitzgerald, calculated backscatter to extinction
+% coefficients as functions of the relative humidity fof the
+% surrounding air for aerosols of varying chemical composition.
+% has observed values ranging from $0.98$ to $1.28$
+% for humidities between $90-88$\%, assuming dry aerosol characteristics
+% do not vary along the path. 
+% Generally $k$, the exponent in Eq.~{\ref{betasig}} 
+% depends on the lidar wavelength
+% and various properties of the aerosol. 
+% Early workers reported the constant to be unity and $k=0.66$.
+% Curcio, et al. Reported values are given
+% as $0.67 \leq k \leq 1$ \cite{jdk1}, although some researchers have reported
+% favorable results for $k=1.15$ using one-step inversions, 
+% for cases where transitions between cloud
+% and dust are not easily defined \cite{wcrr}.
+
+Despite these considerations, an impressive
+arsenal of approaches have been developed by 
+workers. Although, in general, all these techniques have limitations, 
+some can be applied with a large degree of confidence subject to specific 
+instances. 
+ 
+\subsection{The Slope Method Extinction Coefficient Inversion}
+
+The simplest algorithm for the procurement of
+extinction values from lidar measurements is the
+so-called slope method. With reference to Eq.~{\ref{lideq}},
+the lidar equation, we first define $S(r)$ as the 
+'logarithmic range adjusted power'.
+
+\begin{equation}
+                 S(r)=ln[r^2P(r)]
+\label{SR}
+\end{equation}
+
+% where $P(r)$ is the lidar return signal power. The use of this new variable
+% compresses the dynamic range of the signal \cite{aic3}. 
+% This is the convention in graphical
+% analysis of extinction coefficients for the same reason.
+\noindent
+Rewriting Eq.~{\ref{lideq}} with this new variable it can now
+be expressed as,
+
+\begin{equation}
+S-S_0=ln({\beta\over\beta_0})
+-2\int_{r_0}^r\sigma dr\prime
+\end{equation}
+
+\noindent
+Where $\beta_0=\beta(r_0)$.
+
+The differential form of this equation is:
+
+\begin{equation}
+{dS\over dr}={1\over\beta}{d\beta\over dr}-2\sigma
+\label{difform}
+\end{equation}
+
+As we have discussed, the solution 
+of this equation requires knowledge of
+the relationship between $\beta$ and $\sigma$
+when $d\beta/dr \neq 0$. In the case
+of a homogeneous atmosphere $d\beta/dr = 0$ and
+${\sigma} = -{1\over2}{dS\over dr}$
+Thus the attenuation coefficient
+may be obtained from the slope of an $S(r)$ versus
+$r$ plot.
+
+By use of a straight line least squares fitting 
+to the function $S(r)$, $dS\over dr$ can be
+derived over small intervals over which 
+the atmosphere can be considered to be approximately homogeneous with range. 
+The slope method is therefore not considered a profile-
+resolving technique, as the extinction values are actually
+estimates of finite intervals.
+
+This method can be applied under actual atmospheric
+conditions in so far as an interval small enough 
+to be truly said to be homogeneous can be achieved.
+This is limited by the temporal and spatial
+resolution of the system used. As such, it
+also degrades this resolution by it's very
+nature, one of the primary assets of the
+lidar technique. Signal noise adds yet another
+complication to this technique. To overcome
+the effects of noise the chosen interval must be extended.
+This again leads to a degradation of the spatial resolution
+of the measurement.
+
+This method also requires the restriction
+${{\beta^{-1}}|d\beta/ dr|}\ll{2\sigma}$
+to hold throughout most of $S(r)$.
+Such rare quasi-homogeneous conditions
+exist in a few dry climates, but
+is unfortunately not the case
+for most atmospheric conditions of interest.
+It is particularly untrue of certain unstable and turbid media,
+such as dense clouds, fog, smoke and dust.
+Furthermore, in many stable less turbid media such 
+as cirrus clouds, spatial variations lead
+to sharp variances in $d\beta/dr$. Such
+situations lead to an invalidation of this method
+\cite{agc}\cite{jdk1}.
+
+\subsection{Far-End Extinction Coefficient Inversions}
+
+% Tie in intro here with intro material in section 2.4.1
+% ie. want to find sigma and beta from Eq. 2.1, there are 
+% several ways etc., etc....
+
+A profile-resolved technique requires an ``exact'' analytical solution.
+Proceeding from the previously discussed assumed relation given in 
+Eq.~{\ref{betasig2}}.
+%
+% \begin{equation}
+% \beta= C \sigma^k 
+% \label{betasig}
+% \end{equation}
+% $C$:constant
+
+\noindent
+We can rewrite Eq.~{\ref{difform}} in a form
+corresponding to the Bernoulli 
+or homogeneous Ricatti equation:
+
+\begin{equation}
+{dS\over dr}={k\over\sigma}{d\sigma\over dr}-2\sigma
+\label{diffeq}
+\end{equation}
+
+Which has the solution: 
+
+\begin{equation}
+{\sigma} = {e^{{1\over k}(S-S_0)}\over 
+{[\sigma_0^{-1}-{2\over k}{\int^r e^{{1\over k}(S-S_0)}dr\prime ]}}}
+\label{fareq1}
+\end{equation}
+% where $\sigma_0^{-1}=C$, our constant.
+
+% PERSONAL NOTE: Maybe say more about near-end solutions! 
+
+This is commonly known as the 'near-end' or 'forward inversion'.
+This solution requires knowledge of $\sigma_{o}$ the boundary condition of the extinction
+coefficient in the near field (close to the lidar). However, the difference 
+of terms in the denominator leads to mathematical instability. 
+The resulting solution is exceptionally prone to noise.
+% even for relatively clear signals suggesting the requirement for an unattainable 
+% level of accuracy in ${\sigma_0}$. 
+These instabilities also propagate 
+and grow as the inversion iterates with range.
+
+One can modify this solution in order to avoid such difficulties using
+an approach suggested by J.D.Klett \cite{jdk1}.
+If we define $\sigma(r_f)=\sigma_f$, Eq.~{\ref{fareq1}}:
+
+\begin{equation}
+{\sigma} = {e^{{1\over k}(S-S_f)}\over 
+{[\sigma_f^{-1}+{2\over k}{\int^r e^{{1\over k}(S-S_f)}dr\prime ]}}} 
+\label{kfee}
+\end{equation}
+
+This `far-end' or reverse iteration inversion is often referred to as 
+the `Klett Inversion'. The sum in the denominator results in 
+significantly improved stability over the near-end solution. 
+The form of the denominator also indicates
+that the dependence of the solution on ${\sigma_f}$ decreases with increasing
+range values. By far the most widely used inversions in lidar research
+are numerical implementations of Eq.~{\ref{kfee}}. In our work
+we have adopted this approach.
+
+The above inversion can 
+be recast by means of the identity ${\exp^{\ln x}}=x$ 
+into the form,
+
+\begin{equation}
+{\sigma} 
+= 
+{{{P(r)} \times {r^{2}}}
+\over 
+{[
+{
+{{P(r_f)} \times {r_{f}^{2}}} 
+\over 
+\sigma_f
+}
++{{2\over{k}} \int^r 
+{
+{P(r\prime)} \times {r\prime^{2}}
+} 
+dr\prime} 
+]}} 
+\label{wolfee}
+\end{equation}
+
+As suggested by Steinbrecht and Visser \cite{evpd}\cite{ws}. 
+The advantage gained here, is 
+that this inversion is defined for signal values of $\leq 0$. The
+definition of the logarithmic range adjusted power,
+Eq.~{\ref{SR}}, which is used in the Klett inversion, 
+Eq.~{\ref{kfee}}, clearly does not permit this. 
+Although Eq.~{\ref{kfee}} and Eq.~{\ref{wolfee}} are mathematically
+identical, in our work it appears not to be the case
+computationally from our experience with real and simulated data.
+The author is unable to account for these discrepancies at this time.
+
+Fortunately one can circumvent the problem of values $\leq 0$ in several ways
+as we will discuss later.
+
+\subsection{Direct Effective Mean Extinction Coefficient Inversions}
+
+A value for the cloud optical thickness and subsequently
+the mean value for the cloud extinction may be derived 
+by comparing the difference in the background return signal from the 
+surrounding atmosphere above and below the cloud.
+% lidar before the incident pulse enters and 
+% after it emerges from the cloud. 
+This ratio of the background signal just below the cloud base and
+just above cloud top is logarithmically proportional to the 
+optical depth of the cloud. This requires the cloud be located in a 
+relatively homogeneous region of the atmosphere
+and thus the background scattering from above and below 
+the cloud differs only by the two way attenuation by the cloud
+of the above-cloud return. 
+
+% \begin{equation}
+% {P_{RA}}(r_2)={P_0}{c\tau\over2}{A{\beta_{RA}}(r)\over {r^{2}_{2}}}
+% e^{[-2\int_0^{r_{2}}{({\sigma_{R}}(r\prime) + {\sigma_{A}}(r\prime)) dr\prime}]}
+% \end{equation} 
+% Say a bit more here and define parameters 
+% - can refer back to equation numbers given earlier etc...
+% \begin{equation}
+% {P_{RAC}}(r_2)={P_0}{c\tau\over2}{A{\beta_{RA}}(r)\over {r^{2}_{2}}}
+% e^{[-2(\int_0^{r_{2}}{({\sigma_{R}}(r\prime) + {\sigma_{A}}(r\prime)) dr\prime} 
+% + \int_{r_{1}}^{r_{2}}{{\sigma_{C}}(r\prime) dr\prime]}
+% \end{equation} 
+% \begin{equation}
+% {{P_{RA}}(r_2)\over {P_{RAC}}(r_2)} = 
+% e^{-2[\int_{r_{1}}^{r_{2}}{({\sigma_{C}}(r\prime) dr\prime]}
+% \end{equation}
+
+The signal at the cloud base can be expressed as:
+
+\begin{equation}
+P(r_b) = {P_0}
+{\frac{c\tau}{2}}
+{\frac{A{\beta}(r_b)}{r^{2}_{b}}}
+e^
+{-2[\int_0^{r_{b}}
+{{\sigma_{A}}
+(r\prime) dr\prime}]
+}
+\label{basepower}
+\end{equation}
+
+\noindent
+Where the parameters are as previously defined and with
+the subscript $b$ denoting the atmosphere just below cloud
+base. $\sigma_{A}$ is the mean attenuation of the atmosphere
+below the cloud.
+% 
+% \noindent
+% $\tau$ = the pulse duration\\
+% $P_0$ = the transmitted power at time $t_0$\\
+% $c$ = the velocity of light\\
+% $A$ = the effective system receiver area\\
+% 
+% And here,
+% 
+% \noindent
+% ${P_{b}}(r)$ = the instantaneous received power at time $t$
+% from the cloud base\\
+% $r_{b}$ is the range at cloud base\\
+% ${\beta(r)_{b}}$ is the volume backscatter coefficient
+% at the cloud base\\
+% $\sigma(r)$  is volume extinction coefficient at the cloud base
+
+\noindent
+Similarly for the return from the atmosphere just above
+cloud top:
+
+\begin{equation}
+P(r_t)
+= {P_0}
+{\frac{c\tau}{2}}
+{\frac{A{\beta}(r_t)}{r^{2}_{t}}}
+e^{-2[
+{\int_{0}^{r_{b}}}{\sigma_{A}}(r\prime) dr\prime + 
+{\int_{r_{b}}^{r_{t}}}{\sigma_{C}}(r\prime) dr\prime
+]}
+\label{toppower}
+\end{equation}
+
+\noindent
+where, $\sigma{c}$ is the mean cloud extinction coefficient.
+%
+% \noindent
+% ${P_{b}}(r)$ = the instantaneous received power at time $t$
+% from the cloud top\\
+% $r_{t}$ is the range at cloud top\\
+% ${\beta(r)_{t}}$ is the volume backscatter coefficient
+% at the cloud top\\
+% $\sigma(r)$  is volume extinction coefficient at the cloud top
+
+\noindent
+Defining the scattering ratio:
+
+\begin{equation}
+R_{SC}
+= {\frac{{P}(r_b)}{{P}(r_t)}} = 
+\frac{{\beta_{b}}{r_{b}^{2}}}{{\beta_{t}}{r_{t}^{2}}}
+e^{[2 
+{\int_{r_{b}}^{r_{t}}}{\sigma_{C}}(r\prime) dr\prime
+]}
+\label{ratiopower}
+\end{equation}
+
+\noindent
+We may then express the optical depth for the cloud as:
+
+% You must say more to clarify the details here !
+
+\begin{equation}
+{\tau_{C}} = {\int_{r_{b}}^{r_{t}} \sigma_{C}(r\prime) dr\prime}
+= {\frac{1}{2}} \ln (\frac
+{{{P}(r_b)}
+% {\beta_{t}}
+{r_{t}^{2}}}
+{{{P}(r_t)}
+% {\beta_{b}}
+{r_{b}^{2}}})
+\label{deeppower}
+\end{equation}
+
+\noindent
+Where we assume ${\beta_{t}}\sim{\beta_{b}}$ for a 
+homogeneous surrounding atmosphere.
+
+This method has the obvious advantage that it utilizes only
+those returns that contain cloud signal and does not require
+a profile of clear air either before or after the cloud
+moves into the field of view in comparison to similar methods used
+elsewhere \cite{anunstdwwcb}. This has obvious statistical
+advantages in our confidence of the derived extinction.
+In practical applications a Rayleigh background atmosphere
+is assumed from temperature and pressure conditions obtained
+from sonde launchings. 
+
+Such a technique does not provide a
+complete profile of cloud extinction
+as is the case for 
+% the previously mentioned
+% solutions (slope method and 
+far-end inversions.
+%).
+However, it does not require additional information
+on the boundary condition and has been found to 
+% given reasonably
+% averaged values with a good SNR 
+provide a reliable value for the mean cloud extinction.
+
+\section{The Cloud Base Height}
+% Intro on importance of cloud base height?
+% a. intro on importance of cloud, base, top, etc.
+% b. how it is presently done - limitations.
+% c. what we did, advantages.
+% d. what algorithms we used, etc. [base vs. bottom]
+% e. need for averaging, importance. 
+% ^^^^^^^^^^^^^^^^^^^^^ Not for cirrus - reference ?
+% Too diffuse, discuss those items of main interest
+% in the order of priority.
+% DIMER!
+% This lead up to your specific interests is too broad.
+% Focus on items of importance.
+% 1. What is present interest - GCM.
+% 2. How is cloud base currently measured.
+% 3. What are the problems.
+% 4. Lidar improvements.
+% 5. Correlation of "old" with lidar measurements.
+% Our algorithm in brief (refer to paper).
+
+Among the cloud parameters specified in GCM's, 
+the altitude and thickness information are most
+important. Cloud base altitudes 
+relate directly to cloud formation and
+frequency. 
+% The rise of unsaturated convective currents and it's
+% consequent temperature decreases at the dry adiabatic 
+% lapse rate (${10^{o}}/1000m$) leads to an increase in the relative humidity
+% of that air parcel. Cumulus clouds are generated when the air-mass'
+% relative humidity approaches 100 percent. This altitude is known as the
+% the lifting condensation level {\em (LCL)}, and also corresponds the
+% cloud's base altitude \cite{jmmmdm}. 
+%
+% Cirrus and high altitude 
+% clouds form due to by deep convective
+% transport of moisture, synoptic scale lifting and the
+% spreading of aircraft contrails (or condensation trails)
+% \cite{wcrp}. Knowledge of cloud base leads to an understanding
+% of the origin of cirrus from the updraft process as
+% well as the contribution to cirrus cloud formation
+% from the contrails, an anthropogenic source \cite{knl3}.
+% Cirroform clouds can evolve
+% from the tops of cumuliform clouds when an appropriate
+% temperature drop occurs\cite{arlpvh}. 
+% Thus cloud top altitudes give an 
+% indication of the contributions from such processes also.
+% Furthermore anomalous cloud formations, at say, elevated
+% temperatures or lower than normally expected altitudes,
+% can indicate the involvement of alternative mechanisms
+% such as a presence of additional cloud condensation {\em (CCN)},
+% or ice nuclei {\em (IN)}. 
+Emission temperatures can be established given knowledge
+of cloud base altitudes. Cloud elevation can provide insight into the 
+distribution of atmospheric water vapor.
+%  below, in and above
+% cloud region. 
+Infrared fluxes are modified by cloud droplet scattering and 
+water vapor 
+% {\em dimer} 
+absorption.
+% within the $8--13\mu$m atmospheric windows.
+% This effect is particularly strong reducing cirrus cloud to
+% ground atmospheric transmission up to 50 \%. 
+Such information 
+is essential to a better understanding of 
+radiative processes in cloudy atmospheres.
+
+Cloud base height\footnote{Although we have used cloud base height
+and cloud base altitude interchangeably throughout this report,
+the two quantities do differ slightly. 
+The height of a point, e.g. the base or
+top of a cloud, is the vertical distance from the
+point of observation to the level of that point. The altitude
+of a point is the vertical distance measured from mean sea level
+to the level of that point\cite{WMO}. For our work, the differences are not
+important.} is also an indicator of a cloud's role as an
+atmospheric radiation feedback mechanism in the ``greenhouse effect''.  
+For example, Ohring and Adler \cite{geh} 
+have shown that a one kilometre increase in cloud
+top altitude and subsequently vertical extent, 
+can result in a $1.2^{o}\;K$ increase in surface
+temperature. Identical increases in both base and
+top or elevation, however, result in 
+only a $0.6^{o}\;K$ in surface temperature.
+% This suggests that the the greenhouse effect is
+% inversely proportional to cloud base height.
+
+\subsection{Definition of Cloud Base}
+% Some further discussion here, bottom vs. peak
+
+The definition of cloud base is highly dependent upon the
+technique used to measure it.
+Current methods for cloud height measurement include
+the automatic rotating beam ceilometer (RBC), 
+the automatic fixed beam ceilometer (FBC), ceiling balloons, 
+ceiling lights, in-situ aircraft observations and of course 
+lidar \cite{wle}. The instrument of choice 
+for routine determination of cloud base height and cover has been 
+the ceilometer. Ceilometers require a bistatic configuration. 
+The rotating beam ceilometer (RBC) consists of a 
+transmitter which is a vertically rotating modulated
+lamp projection system and a receiver located below the cloud of
+interest at a prescribed baseline distance from the transmitter. 
+The return is recorded as function of the transmitter's angular displacement. 
+Upon the transmitter beam's intersection with the cloud base
+and the receiver's field of view, a maximum return is observed. 
+A base altitude may then be determined by  triangulation. This is
+the convention currently in use by the U.S. National Weather Service. 
+
+RBC returns have been shown
+to be greatly affected by cloud geometry and in-cloud multiple scatter
+in comparison to lidar techniques. The less accurate but more compact 
+and inexpensive fixed beam ceilometers (FBCs) reverse the
+configuration by having the transmitter fixed at the cloud base and
+scanning the receiver along the beam path, once lateral alignment
+has been performed. FBCs offer a low cost supplementary cloud base
+height retrieval technique to RBCs but are of comparatively lower 
+precision. RBC's tend to indicate higher
+base heights than lidars and aircraft pilot 
+reports. The recent advent of low power, 
+highly automated, eye-safe laser ceilometer
+represent a cost-effective compromise between RBC's
+and more expensive, 
+% high maintenance experimental 
+research lidar systems. Due to the
+low energies of the commercial laser ceilometers,
+they have lower SNR,
+% transmitters in these systems,
+% result in low SNR and thus 
+poorer spatial resolution
+and more limited range. 
+% In fact, 
+% commercial ceilometers tend to be limited in terms of range 
+% limits between 30 - 2000 feet. 
+
+Algorithms have been developed to estimate cloud base
+heights from the LANDSAT Multispectral scanner
+satellite radiance measurements.
+Although such a platform would have the
+advantage of global coverage, this technique 
+relies on the shadow cast by the cloud 
+and is thus restricted to certain 
+types of small broken cumulus clouds
+in specific orientations to the solar angle.
+As such this technique is necessarily only
+an estimation for a small set of clouds
+types in highly idealized conditions.
+\cite{tbsksrmwbawmn}
+ 
+% Lidar systems are limited
+% mostly by transmitter power, detector sensitivity and the signal to noise
+% ratio. Present laser technology permits observations of
+% mesospheric activity under night conditions. However, the expense and 
+% fragility of most lidar systems make truly routine 
+% measurements impractical at present. 
+
+Lidars specify cloud base by either the altitude where
+the rapid increase in backscatter signal begins 
+(cloud bottom altitude, $r_{b}$) or the 
+altitude at which the backscatter 
+signal reaches its maximum (peak, $r_{p}$).
+The peak signal will always be located above the
+cloud bottom. The difference between the two altitudes
+is dependent upon the scattering properties and hence the
+microphysics of the cloud in question. This difference can
+be substantial in some cases but generally
+becomes less significant as the altitude of the clouds dealt with increase. 
+
+The choice of which definition to use for ``cloud 
+base'' is somewhat dependent upon where the information 
+will be employed. Aviation visibility applications 
+for example may favor the bottom signal location and where cloud opacity begins
+whereas for GCM implementation cloud extent 
+is critical and the peak cloud signal location may be better. We will present
+further considerations and discussions for selecting between these
+definitions later in this report. 
+% In the interests of our work in ECLIPS and here, we have selected
+% the {\em cloud bottom altitude} as our value for discrimination where
+% the cloud begins. 
+
+Lidar systems allow for measurements of cloud
+positions with unparalleled precision and improved accuracy 
+\cite{knl3}\cite{drdlfr}. Other cloud macroscopic
+parameters such as cloud top and consequently cloud thickness 
+can also be obtained from lidar profiles. However, 
+this precision can contribute to some of the difficulties
+involved in deriving cloud altitude information.
+The complex structure of clouds are 
+highly resolved by lidar. This leads to signatures
+with multiple peaks and high variances in even single cloud
+layers. As discussed, multiple scattering effects
+also add to the ambiguity in the measurement cloud position.
+In contrast, RBC's yield rather low-featured, smooth
+profiles from which cloud base altitudes are easily
+distinguished, albeit with comparatively 
+limited resolution and range.
+
+\subsection{The Cloud Base Height Algorithm}
+
+Although it is possible to obtain cloud altitude information
+from direct assessment of individual lidar signatures,
+evaluating large 
+% ECLIPS 
+data sets required automation
+of this process. Subsequently, an algorithm, developed by members 
+of the ISTS-York University Lidar group,
+to extract such information \cite{srpwsaic}, has been made use
+of here to a great extent in this study. 
+It is one of two algorithms used in the 
+ECLIPS International effort to extract such information. 
+
+The algorithm utilizes the zero-crossing or sign change
+of the first derivative of the lidar return signal power $dP/dR$ to
+identify the rapid increase in return signal which results from the larger cloud
+droplets present in the cloud. 
+Many such crossings occur in practice resulting
+from inhomogeneities in cloud structures, as well as from signal noise.
+It is therefore necessary to develop a set of criteria, to 
+filter out such spurious results. 
+
+$dP/dr$ is determined from a least squares fit
+of a sliding window of successive points
+from the start to  end of the profile. 
+A  $3$ to $5$ point fit has been determined to be suitable for
+our data. By combining higher resolution in the range
+with a larger number of points for the least squares fit, better smoothing
+of the $dP/dr$ curve and a minimization of spurious zero-crossings, resulting 
+from noise, may be obtained. It is noted, that for lidar signatures 
+containing sharp changes in curvature, an upward or downward bias, 
+depending on the sign of the curvature, 
+in the altitude of the zero-crossing is introduced.  
+
+% L^
+
+A noise level is calculated corresponding to the return
+signal at each cloud base ($r_{b}$) 
+and a peak altitude ($r_{p}$) identified.
+Zero-crossings where the difference between the return
+at the base and adjacent peak is less than twice the noise
+calculated at the peak altitude are regarded as insignificant 
+and rejected. This criteria is also {\em scale-able} using a multiplicative
+factor ({\em corrfak}) and is dependent on the system data acquisition
+characteristics (ie. detector and electronic line noise) and 
+contributions from optical modifications of the backscatter 
+received by the detectors (ie. {\em ND} or neutral density filters).
+
+The current rejection criteria for peak signals is given by the expression:
+
+$$
+P(r_{base})-P(r_{peak}) \leq corrfak \times 
+\sqrt{P(r_{peak})}\sqrt{87 \times {range
+\: resolution} \times {10^{ND}} \times 1.16}
+$$
+
+The constants in this rejection criteria formula were 
+calculated for the ISTS Nd:Yag Lidar system in Toronto, 
+Canada. The technical details required for an identical 
+calculation to be performed on the RIVM system are
+unavailable at this time. We have however obtained 
+satisfactory results with the highest possible
+sensitivity ({\em corrfak}) setting (0).
+
+Apart from lidar and in-situ aircraft observations, 
+existing ground-based cloud monitoring systems 
+are incapable of measuring cloud top altitudes.
+It is possible in all cases for lidar to extract
+an {\em apparent} cloud top altitude when the signal
+falls into the noise. If optical attenuation is not too high 
+the lidar pulse penetrates the cloud completely and 
+the signal transition from the cloud top to the clear air 
+identifies the true cloud top height.
+
+The cloud top altitude, $r_{t}$, is defined in the algorithm as the point just below 
+which the return from the cloud decays to the value less than or 
+equal to the backscatter signal at the cloud base. 
+For cases where no measurable clear air backscatter exists at the
+base, the cloud top is located where the signal drops to the same
+background intensity as below the cloud. Where the sub-cloud backscatter is
+well defined, the top is retrieved with improved accuracy by comparing
+the range-corrected signals.
+
+\begin{equation}
+{r_{t}^{2}}{P(r_{t})}{ \leq}{r_{b}^{2}}{P(r_{b})}
+\label{rangecorr}
+\end{equation} 
+
+The algorithm is capable of locating cloud parameters 
+for multi-layer structures. In such a case, it is
+given that a region of clear air must exist between  
+adjacent layers. For each $r_{b}$ value, 
+corresponding $r_{t}$ values which drop to the clear
+air value are located. All other peak returns between
+each base-top pair are ignored. The procedure is
+repeated for all layers.
+
+%Although the system is capable of sub-second temporal
+%resolution, such resolution is neither required 
+%nor prudent. Such return profiles
+%have inherently low SNR. Averaging
+%provides a more accurate representation.
+%Since, in any time series, cloud layers begin and
+%end at random intervals, attempts to derive time averages for
+%$r_{t}$, $r_{p}$ and $r_{b}$ must take this into account, otherwise
+%such averages would become meaningless values derived from 
+%a superposition of multi-layer data. 
+%The ECLIPS format
+%incorporates a ten-minute time interval which is automatically
+%started and stopped at cloud boundaries as necessary.
+
+%In such an averaging, a stipulation is made that,
+%only points not too far displaced spatially or temporally
+%are joined. An initial value for a vertical window 
+%is chosen ($_{-}^{+}{500m}$ or less for low clouds),
+%and all adjacent points in this window are joined. 
+%Vertical jumps greater than this are assumed to be cloud 
+%boundaries. If an adjacent point is not available, either
+%due to our criteria or from signal drop out, the next point
+%is examined with a lower allowed vertical displacement value.
+Fig.~{1.3} is a schematic of the cloud base algorithm.
+
+\begin{figure}
+\vspace{5.0in}
+\caption{Schematic of cloud base algorithm}
+\end{figure}
+
+Horizontal extent of the clouds can be determined using the cloud base algorithm
+at varying sensitivities to optimize 
+location of the peak returns as a function of time.
+
+\section{Data Averaging Techniques}
+
+% too brief
+% state problems encountered in deriving "average" cloud properties
+% Not clear.
+% give careful detail !
+% Say more here to make procedure clearer!
+% Should rewrite whole section on the normal and enhanced
+% method to make things clearer.
+
+The complexity and high sensitivity of lidar systems 
+make their detection components prone to spurious contributions
+from a number of sources including 
+dark current and background noise.
+Clouds persistent in time properties allow for
+an increase in the SNR proportional
+to the square root of the independent number of samples averaged.
+
+The practice of averaging lidar profiles
+came with the inception of the earliest lidar systems.
+The higher the resolution of a system the fewer the photon events
+one can expect to be detected per trace. 
+Noise becomes a significant contribution, 
+specifically in higher altitudes 
+where photon counts are typically low. 
+The averaging of lidar returns requires that 
+such measurements must be made within rapid succession,
+such that the atmospheric conditions have not varied
+substantially within the elapsed interval between such measurements.
+This requires that the backscattering characteristics be on
+the same order of magnitude as other sources of noise
+\cite{mjtmptw}\cite{nmdkkcrm}. Essentially, averaging
+extends the effective {\em ``exposure time ''} of the detectors,
+but without the degradation of pulse length and hence resolution 
+and problems of saturation.
+
+Furthermore, for the most part, clouds are
+extremely inhomogeneous. Single lidar profiles of clouds alone
+are rarely representative of the cloud as a whole
+and as such are not very informative. 
+For studies of radiative transfer, meaningful characteristics
+from inhomogeneous clouds are often only apparent from data
+that has undergone substantial averaging processes. 
+
+However, within a lidar 
+time series, clouds often move vertically
+as well as horizontally, across the field of view. 
+Since clouds are inhomogeneous, 
+simply averaging the data over range intervals
+as previously described inevitably leads to mixing or
+contamination of the cloud portions of the signal with
+non-cloud regions. If this were done the cloud's 
+opacity would be diluted by the ``averaging in'' 
+of clear atmosphere. This would lead to an underestimation
+of the clouds actual optical depth. Conversely averaging cloudy regions with
+clear or non-cloud portions of the profile would lead to 
+% contain some cloud signal leading the enhanced backscatter
+an overestimation of the clear atmosphere's optical extinction.
+Hence the averaging of subsequent lidar profiles in time
+must be approached with attention to not compromising the optical
+characteristics of either the cloud or background atmosphere.
+
+It is also possible to average lidar signals with respect to
+range. That is, to attempt to minimize the effects of noise
+by summing and averaging consecutive points along the lidar
+range resolved profile. This degrades the vertical
+resolution of the measurements involved, and again care must
+be taken not compromise the cloud optical presence. However,
+given a sufficient vertical range, and avoiding the cloud portions
+of the trace, this can be quite an effective treatment to noisy
+background signals especially in the higher ranges where the
+SNR is low.

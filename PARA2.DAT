@@ -1,0 +1,10 @@
+npts,mpt,dpt,tpt,inpts
+100,3,3,0,0
+rez,zero,nob,fax,high,nlog
+40.00,13.6,1,1.0,1.0e+20,1
+corrfak,xovlp,ieb,k,setref
+0.0,0.0,401,1.0,0
+nd,gain,nos,cban,baseline2
+0.0,0.0,250,1,1480.0
+thrush,ntot,iabove,iwk,baseline,add,plusig
+100.,14,0,0,1,0.0,0

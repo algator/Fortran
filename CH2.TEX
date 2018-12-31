@@ -1,0 +1,557 @@
+%Documentation [2nd draft]
+\chapter{Inverting Real Lidar Returns: Practical Considerations and
+Caveats}
+
+\section{Data Quality}
+
+Figure~{2.1} \footnote{Many of the following figures in this section 
+have been produced from data processed
+by the the software package KNMI2B2 developed for this project 
+and to be described in the next chapter. 
+
+The package uses the algorithms and techniques previously 
+described for and analyzing cloud lidar data. The software 
+package Origin by MicroCal Software Inc. a Windows 3.0
+application has been used to present the data here. 
+Please consult the documentation that accompanies
+Origin and MicroCal for more details.} shows the expected lidar 
+signal return at 
+1064$nm$ calculated by assuming a pure Rayliegh 
+atmosphere as an attentuating and backscattering
+medium, calibrated and plotted with the data from a cloudless sky
+on August 4th, 1993 from the RIVM lidar system. This calibration
+in effect serves to provide our theoretical lidar signal with
+the constants at the front of the lidar equation, Eq.~{\ref{lideq}}. 
+
+\begin{figure}
+\vspace{5.0in}
+\caption{expected lidar signal return at 
+1064$nm$ calculated by assuming a pure Rayliegh 
+atmosphere as a attentuating and backscattering
+medium, calibrated and plotted with the data from a cloudless sky
+on August 4th, 1993 from the RIVM lidar system}
+\end{figure}
+
+We note that the actual return is less than optimal beyond
+a range of approximately 1200$m$. This shortfall can be attributed
+to a number of factors not taken into consideration in the
+calculation of the signal.
+
+By far the most important factor that has not been included
+in this projection is the presence of atmospheric aerosols 
+in the boundary layer. From the authors experience, these typically 
+have optical extinction values on the
+order of ${10^{-2}}{1\over{km}}$. This strong attenuating 
+presence is a possible explaination for much of the losses 
+early in the profile leading to this rather modest range depth for the system. 
+
+% Although the RIVM has been collecting such data for over
+% a decade, specifically to characterize the boundary layer height 
+% and to obtain aerosol profiles, very little analyses have been
+% performed. Such analyses would allow us to determine a typical
+% aerosol distribution, which we could use to establish some
+% estimation of expected optical-radiative contribution and
+% account for it in our system performance prediction. These analyses
+% were not performed by us as it was not entailed by the defined scope
+% of our work. In fact, evaluations of system performance are also
+% the domain of the system designers and operators.
+ 
+As the system is an {\em aerosol boundary layer} lidar, the optics,
+transmitter and receiver have not been {\em optimized}
+for clouds. The amount of adjustment required to recently realign 
+a similar RIVM system for clouds can atest to the marked difference
+between the two configurations \cite{evpd}. Furthermore, any digitizing
+system has inherent limits in its ability to resolve low signal levels,
+and this is clearly the case for regions beyond 1200$m$.
+
+Complicating the issue further is the presence of {\em after-pulsing}
+or {\em ringing} in the detectors when exposed to high signals.
+Figure~{2.2} shows two individual backscatter profiles (74 and 225)
+taken from the same day, August 4th, 1993 [Julian date:93216]. 
+
+\begin{figure}
+\vspace{5.0in}
+\caption{Lidar backscatter profiles from August 4th, 1993 [93216], 
+trace 74 {\em(top)} and trace 225 {\em(bottom)}.}
+\end{figure}
+
+Profile 74 clearly
+represents a saturated cloud return, with a signal value maximum of about
+32000. Note that although this maximum value is located far beyond the height
+we expect to detect any signal from the background atmosphere there
+appears to be some signal above the cloud which is
+higher than the signal of the background atmosphere prior to entry
+into the cloud. 
+
+Compare this to profile 225, with a much lower cloud peak signal 
+(6000) which is clearly not
+saturated and is located below 1500$m$, within what we expect to 
+be the range at which the background atmosphere will be detectable
+by the system. The signal above it clearly is lower than the
+signal prior to entry into the cloud. This is the result of
+attenuation of the incident and return pulse by the intervening
+medium, specifically the cloud, as we expect. 
+
+While it is possible that there is a strongly backscattering
+aerosol or haze layer above the cloud in trace 74, more than likely
+what is being observed are the effects of after pulsing or ringing
+from the photodetectors in question, avalanche photodiodes (APD).
+This is quite a common problem with such detectors\cite{jacek}. 
+It was initially expected at the start of this study, 
+by the technical personnel primarily involved with the system, that
+the recovery time of the detectors was smaller than the
+time resolution of the data acquisition components. Recently
+it has however been confirmed that this is not the case and that
+we are observing after-pulsing in our recorded data\cite{evpd}. 
+
+The accuracy of the Klett inversion is dependent upon the acuuracy
+of the boundary condition, the reference optical extinction. As was
+previously discussed, unless it is otherwise known, the application
+of the inversion requires an estimate. The reference height is selected
+above the cloud, with the expectation that the only optically scattering or
+attenuating constituent at that height will be atmospheric molecules. 
+If a sonde measurement is taken providing the pressure and temperature
+at or near that height, the optical extinction can be calculated and
+used as our boundary condition.
+
+However, if after-pulsing occurs, the signal values above the cloud
+are then not the result of backscattering from a molecular atmosphere,
+but an artifact created by the detection system.
+Hence, it is advised that a reference height be chosen sufficiently
+high enough above the cloud that one is confident that the inversion
+starts with values that are backscatter and not after-pulsing. 
+Furthermore, near saturated data should be approached with caution
+and of course, saturated data discarded.
+ 
+In Table~{2.1} are some techincal details relevant to our work regarding
+the lidar system under question.
+
+\begin{table}
+\caption{Technical Overview of the
+RIVM Truck Mounted Nd:YAG 1064 nm,
+70 mJ Aerosol Boundary Layer Lidar System}
+\begin{center}
+\begin{tabular}{|l|l|}
+\hline
+\multicolumn{2}{|c|}{Transmitter}\\
+\hline
+Wavelength & 1064 $nm$ \\
+\hline
+Pulse repetition & 10 $Hz$ \\
+\hline
+Pulse length & 9 $ns$ \\
+\hline
+Pulse energy & 70 $mJ$ at 1064 $nm$ \\
+(simultaneous output) &  \\
+\hline
+Beam divergence & 1 $mrad$ full angle \\
+\hline
+\multicolumn{2}{|c|}{Receiver}\\
+\hline
+Telescope & 32 cm (diameter) Fresnel lens \\
+field of view (FOV) & 3.1 $mrad$ full angle \\
+\hline
+System FOV  & 0.5 $mrad$\\
+\hline 
+Optics & 2\% transmission neutral density \\
+\hline
+Detectors & APD at 1064 nm \\
+\hline
+Signal processing & transient recorder \\
+\hline
+\multicolumn{2}{|c|}{Data acquisition}\\ 
+\hline
+\multicolumn{2}{|c|}{transient digitizer sample $f$= 100 $MHz$}\\ 
+\multicolumn{2}{|c|}{averaging: 250 shots/25 sec. 
+every 4 minutes; 24 hours/day}\\ 
+\multicolumn{2}{|c|}{other: background subtraction using pretrigger}\\
+\multicolumn{2}{|c|}{pretrigger length: 5$ms$ (500 analog data points)}\\ 
+\multicolumn{2}{|c|}{data: range (index) corrected, scaling factor (uknown)}\\
+\hline
+\end{tabular}
+\end{center}
+\end{table}
+
+\section{Practical Application of the Klett Inversion Algorithm}
+
+In our work only a basic rectangular numerical integration was performed. 
+As we are dealing with relatively large data sets, previous studies 
+have shown that a more sophisticated routine 
+does little to improve our results \cite{agc}.
+Furthermore, since we have derived this solution from
+Eq.~{\ref{lideq}}, as we have discussed in Sec.~{2.1.5}
+such an inversion will not account for
+multiple scattering effects. Monte-Carlo 
+simulations indicate this deficiency can only account for a 
+contribution on the order of 10 percent. In fact, for clouds of
+low optical depths, such as most cirrus, 
+multiple scattering contributions can be negligible \cite{cmrpacd2} 
+In general $C$ and $k$ in Eq.~{\ref{betasig2}} can be range dependent however
+it has been found that good inversions can be obtained by using constant
+values for these quantities. We discuss the potential for taking into
+account a variable backscatter to extinction ratio instead of
+$C$ in the final section of this report.
+
+In general, $k$ has been set to unity,
+and it has been accepted that there are no {\em stringent} reasons
+for any other choice. It has also been reported that extinction
+inversions such as {\em Klett's}, depend only weakly on $k$.\cite{wcrr}
+In most cases, both the constant of proportionality and
+$k$ are taken as constant along the path of inversion.
+Mulders \cite{jmm}, has found them to 
+vary greatly in the same temporal and spatial fields.
+Studies of the sensitivity of Klett's inversion to the parameters
+have shown small variations in $k$ to have little effect,
+except in cases where $\sigma(r)$ is at or near singularity \cite{hghjafdhs}.
+Varying $k$ to suit the expected cloud can be difficult
+and sometimes impossible to determine for real atmospheric conditions.
+%
+% Cirrus are predominantly composed of a
+% variety of ice crystal habits with complex structures such as bullet shaped 
+% cylinders, rosettes and hexagonal columns and the like, which are thought to
+% behave like isotropic scatterers such that the value of $k$ will be relatively
+% independent of size and shape \cite{rrr}.
+Past efforts, using varying $k$ values have shown very minor improvements
+while involving a major increase in computational time. \cite{agc}
+% taking multiple scattering considerations
+% into account for $k$ and the constant of proportionality
+% have shown a required increase in the processing time for inversions, yielding
+% comparatively minor improvements in the accuracy of our results.
+% 
+\subsection{Estimations of the Reference Altitude and Extinction}
+
+\begin{figure}
+\vspace{5.0in}
+\caption{Graph showing optical extinction
+profiles for a pure molecular or Rayleigh atmosphere at
+$1064nm$. Generated using sonde measurements \SOLID and using 
+an assumed lapse rate of ${-6.5^{o}}{C/km}$ and the
+hydrostatic pressure equation \DASHED}
+\end{figure}
+
+For the far-end inversions, the reference 
+altitude for $\sigma_{f}$ is 
+% as conventionally 
+chosen as high as possible, as long as there is a good SNR.
+% without venturing too far into ranges of completely degraded signal and overwhelming
+% orders of bit-noise. 
+In doing so, errors incurred by inaccuracies in the $\sigma_{f}$ value 
+% in our extinction coefficient estimate are allowed to 
+decay to a reasonable level before approaching the lower 
+altitude region of primary interest.
+% range values where our lidar return signal is
+% strong, and therefore of interest to us. The physical and mathematical basis
+% for such an assumption can be shown on the basis of the requisite transmission
+% functions \cite{agc}. 
+
+% In our case, an altitude in the range of $12-15\;km$ was selected,
+% since in most cases the clouds are below 
+% this altitude, and we could establish the clear atmosphere 
+% $\sigma_{f}$ values quite well.
+
+The reference height is chosen high enough to be relatively safe in assuming
+that backscatter from this altitude  was predominantly from a molecular
+or a Rayleigh atmosphere. Figure~{2.3} is a plot showing a optical extinction
+profiles for a pure molecular or Rayleigh atmosphere at the $1064nm$. 
+wavelength. We have generated
+one profile using an assumed lapse rate of ${-6.75^{o}}{C/km}$ and the
+hydrostatic pressure equation.
+
+It should be noted that backscatter contributions from molecular as well as
+aerosol atmospheric constituents are relatively low at the $1064nm$
+wavelength, hence we would expect very low SNR as such. This results
+in difficulties in specifying reference values for Klettt Inversion as
+we will discuss in length. This low backscatter is the result of a
+rather small cross-section at in the infra-red region. At $1064nm$,
+this translates into an area of ${10^{-32}}{m^2}$, apporximately
+one order of magnitude less than in the visible at $532nm$. 
+One can conclude immediately, that such a consideration would
+indicate that a visible wavelength would be preferable for
+optical measurements using lidar, and as well will show, this
+is largely the case.
+
+% The accuracy of this inversion algorithm is largely 
+% determined by the accuracy of this boundary value estimate.
+Based on the assumption that aerosol and molecular components are the 
+only constituents at a chosen reference altitude a reference extinction
+value can be calculated using a molecular atmosphere.
+The Rayleigh calculations can utilize meteorological parameters 
+obtained from sonde measurements.
+
+% with some assurance from the Rayleigh and Mie expression for 
+% including Shettle and Fenn's aerosol
+% model for the appropriate season \cite{epsrwf}
+% whose validity
+% we discuss later. Despite it's widespread use, the Klett inversion's
+% accuracy in practical applications is limited because of the heavy 
+% dependence on boundary conditions which are, by necessity, 
+% estimates \cite{aamruwcwwm}.
+
+The success and failure of the Klett Inversion depends on a number of
+factors, however Klett \cite{jdk1} identifies the most 
+critical as being the selection of
+an accurate as possible reference value for the extinction {\em (boundary
+value)}. 
+
+From the work performed on the RIVM data set,
+we have found that proper selection of a reference signal value and
+reference height are also important considerations.
+
+\begin{figure}
+\vspace{5.0in}
+\caption{Simulated relative range-corrected logarithmic 
+lidar backscatter signal $(S-S_{0})$
+for a simulated {\em plateau shaped} optical extinction profile}
+\end{figure}
+
+\begin{figure}
+\vspace{5.0in}
+\caption{Klett inversions of the previous simulated 
+backscatter profile figure using varying values
+for the reference optical extinction boundary condition,
+$\sigma_{f}$.}
+\end{figure}
+
+Figure~{2.4-2.5} shows a simulated relative range-corrected logarithmic 
+lidar backscatter signal for a 
+simulated {\em plateau shaped} optical extinction profile and
+an Klett inversions of the backscatter using varying values
+for the reference optical extinction boundary condition,
+respectively. This is similar to the simulation performed
+in Kletts original article describing this techinique\cite{jdk1}.
+
+From Figure~{2.5}, it is apparent that the inversion is quite
+{\em forgiving}, with respect to ucertainty in the estimation
+of the reference optical extinction boundary condtion, 
+$\sigma_{f}$. The correct value $\sigma_{f}$ is $1\over{km}$,
+however, estimations as high as 100\% above and 50\% below
+the correct value still result in a convergence to the correct
+profile.
+
+\begin{figure}
+\vspace{5.0in}
+\caption{Klett inversion of a simulated
+constant extinction profile using varying values
+of $\sigma_{f}$.}
+\end{figure}
+
+Figure~{2.6} is a similar result but for the case of a simulated
+constant extinction profile, from which it is easier to gauge
+the effects of errors in our boundary condition estimate of
+$\sigma_{f}$. It can be seen that the inversion has corrected itself to within
+10\% of the actual value regardless of high above or below we
+have estimated $\sigma_{f}$ from the correct value. However
+it should be noted that errors in the inversion which result from
+an underestimation of $\sigma_{f}$ tend to propogate further
+down the length of the profile and are hence more detrimental. 
+
+\begin{figure}
+\vspace{5.0in}
+\caption{Klett inversion of a simulated
+constant extinction profile using varying values
+of reference height signals.}
+\end{figure}
+
+\begin{figure}
+\vspace{5.0in}
+\caption{Klett inversion of a simulated
+constant extinction profile with varying
+constant values added and subtracted to the entire profile.}
+\end{figure}
+
+Similar analyses have been performed for errors in the reference
+height signal value and addition and subtraction of constant values
+to the entire profile and are shown in Figures~{2.7-2.8}, respectively.
+
+As previously, discussed, we choose our reference 
+height at which we start our inversion as high as possible.
+Since the detected atmospheric backscatter at high altitudes from 
+the system is low or nonexistent, we expect that these reference 
+signal values will most likely be erroneus data which are nothing
+more than pure noise from the detector electronics. Thus an
+assessment of the effects of an incorrect value in the reference
+signal must be obtained. From Fig.~{2.7}, we see values below
+the actual signal result in initial over prediction in the optical
+extinction, but which correct themselves rather quickly.
+For values above the correct signal we see an initial underestimate
+in the optical extinction which is slow to recover to the correct 
+profile values.
+
+The latter analysis, Fig.~{2.8}, 
+was performed with an interest in assessing the
+effects of {\em background subtraction}. 
+This is a common practice
+in the processing of experimental lidar data. A value for noise 
+which results from the system data acquisition electronics etc.,
+is obtained from a portion of the digitized signal either before
+or after the active triggering range in which the atmospheric 
+measurement takes place. This value ussually an average of the
+signal over this pre or post trigger range and is subtracted
+from the entire profile, so as to obtain a signal profile which
+is {\bf\em ideally} the result of only the detected atmospheric backscatter. 
+
+For noisy signals this often results in zero-crossings of the
+backscatter signal values. This is not permitted by our inversion 
+mathematically as we must define the logarithmic-range adjusted
+power, Eq.~{\ref{SR}}, which will then be undefined for such values. 
+In our case, we know that our signals are quite noisy, specifically
+beyond the 1200$m$ range, and expect many zero crossings. In such
+a non-ideal case it is sometimes useful to reconstitute the 
+original backscatter signal by re-adding this background noise value
+to the profile. If this value is not known or if the data 
+acquisition component records spurious negative values for low SNR
+regions of the data then it is useful to add some constant
+to the profile also.
+
+\begin{figure}
+\vspace{5.0in}
+\caption{Graph of range at which varying 
+the reference optical extinction value, reference height signal value 
+and constant added or subtracted to the profile effect of the height 
+at which the recovery of the inversion to within 10\% of the correct
+value occurs.}
+\end{figure}
+
+From Fig.~{2.8}, we observe that subtracting a constant value from 
+the actual signal results in initial over prediction in the optical
+extinction, but which correct themselves rather quickly.
+Adding constant values to the correct signal however, results 
+in an initial underestimate in the optical extinction which 
+is slow to recover to the correct profile values.
+
+To gauge the relative contributions of varying all these boundary
+conditions, Fig.~{2.9} shows the range at which the recovery of the 
+inversion to within 10\% of the correct value occurs when varying 
+the reference optical extinction value, reference height signal value 
+and a constant is added or subtracted to the profile.
+
+It is seen that the inversion is relatively robust to 
+positive uncertainties in the reference extinction value chosen
+whereas underestimation of this value tends to have more far reaching 
+effects as we previously mentioned. The algorithm is far more
+sensitive to errors in reference height signal and to background addition.
+An underestimation of reference height signal tends to recover
+faster than an overestimation and background addition or
+subtraction tends not to affect the inversion provided
+the constants added or subtracted are sufficiently small
+(within 100\% of the signal value).
+
+Upon rexamination of the inversion algorithm, 
+Eq.~{\ref{kfee}}, the reason behind 
+such attributes of the inversion becomes clear. For large
+positive values ($\sigma_{f}\rightarrow\infty$) 
+of the boundary condition term, 
+$1\over{\sigma_{f}}$, in the denominator
+of Eq.~{\ref{kfee}}, the contribution to the algorithm
+is quite small. As $\sigma_f$ becomes small however ($\sigma_{f}\rightarrow 0$),
+this term bcomes much larger in the denominator leading
+to underestimations of the extinction.
+
+It can also be seen from Eq.~{\ref{kfee}} that the 
+reference height signal given as 
+a logarithmic range adjusted power, $S_{f}$, affects
+the inversion throughout. 
+
+The recoverablity of the inversion is largely due to the 
+introduction of higher and more accurate values further
+downstream in the signal which dominate the inversion 
+and bring it towards
+the correct values through terms such as the integral in the
+denominator. Although such uncertainties become less and
+less significant as the inversion proceeds, it is important
+to note that, again, because of the integral term, noise
+and other errors in the data have some, if not modest 
+effect throughout. It is there always in our best interest 
+to reduce such effects through averaging or any other method available.
+It should be noted that the propogative effects of noise are not
+discussed here but have been covered elsewhere \cite{jdk1}.
+
+In general, it is the relationship between the reference height signal, 
+$S_{f}$, and the reference extinction coefficient, $\sigma_{f}$,
+that {\em calibrates} the inversion of the signal throughout.
+A grossly inaccurate estimate of both can lead to potentially disasterously
+inaccurate results, especially for values near the reference height.
+
+\subsection{Use of Averaging Techniques}
+
+\begin{figure}
+\vspace{5.0in}
+\caption{Plot of an original lidar backscatter signal as collected 
+from August 4 1993 [93216] ({\DOTTED}). A profile where the value of the
+most negative signal value is added to the entire profile along with
+a small offset is also plotted ({\DASHED}). Signal values from
+the topmost range height $(4000 m)$ down to $1500 m$ (the height 
+at which we expect to begin to detect some of the background 
+atmosphere) are averaged or fitted to 5 points above and below
+the signal point of interest and shown as ({\SOLID}).}
+\end{figure}
+
+The conventional averaging method to improve SNR is with respect
+to time, as we have previously mentioned. 
+This is not adviseable for our data since both clouds are
+extremely variable in time and our duty cycle of four minutes
+between data acquisition cycles is too long. Clouds that are
+a seen in one signal trace can completely dissappear within
+the next subsequent profile. Hence averaging such consecutive
+returns would result in a meaningless profile.
+
+Should our data acquisition protocol change to a more consecutive
+and continuous procedure this may be possible. This method
+effective extends the exposure time of the detectors without
+degrading resolution and causing saturation. There have been
+some encouraging indications from a similar system 
+at the RIVM recently modified to collect the data at in more continous 
+duty cycle. Averaged data from this system appears to detect
+the background atmosphere at ranges of approximately $4000 m$ 
+and suggest that this maybe remedy for the poor detection 
+capabilites of the present system \cite{evpd}.
+
+Figure~{2.10} shows the possible techniques that can be used
+to condition our present lidar backscatter profiles prior to inversion.
+Here an original signal as collected is plotted. The value of the
+most negative signal value is added to the entire profile along with
+a small offset and is also plotted. Finally, signal values from
+the topmost range height $(4000 m)$ down to $1500 m$ (the height 
+at which we expect to begin to detect some of the background 
+atmosphere) are averaged or fitted to 5 points above and below
+the signal point of interest. Note there is little difference
+between the fitted and averaged data result. In general it
+is recomended that the data be averaged and not fitted. As the result is
+mostly due to supposedly random noise it makes 
+little intuitive sense to {\em fit} to it.
+
+\subsection{Example of an Inversion of Real Data}
+
+Figure~{2.11} is a plot of a range corrected signal (trace 6) from 
+August 4th 1993 [93216]. It is shows relatively strong cloud return
+around $1200 m$.
+
+\begin{figure}
+\vspace{5.0in}
+\caption{Plot of a range corrected signal (trace 6) from 
+August 4th 1993 [93216]}
+\end{figure}
+
+Figure~{2.12} shows several inversions of that signal using
+a variety of values for the reference extinction coefficient,
+with and without averaging. Regardless of the chosen boundary condition
+or the averaging of the data, the inversion converges to 
+a peak value of about $5{1\over{km}}$. Below the cloud layer,
+from $500 m$ to $1000 m$ we see the boundary layer
+aerosol contribution, which appears to be 
+approximately $10^{-2}{1\over{km}}$. Values calculated for ranges
+higher than $1500m$ are completely unreliable however.
+
+\begin{figure}
+\vspace{5.0in}
+\caption{Inversions of a signal (trace 6) from 
+August 4th 1993 [93216] using a variety of values 
+for the reference extinction coefficient,
+with and without averaging.}
+\end{figure}
+
+This cloud optical extinction result below $1500m$ compares well with
+values predicted from models calculated by Wright et al.,
+from a modified scattering model of Deirmendjian
+\cite{rmm}.
+
